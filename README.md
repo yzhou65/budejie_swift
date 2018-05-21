@@ -1,6 +1,6 @@
 A social app where users can view and share news, images, jokes and funny videos.
 
-# budejie2
+# budejie swift version
 
 ####
 A clone of 
