@@ -183,9 +183,9 @@ class ADPublishView: UIView {
     
     private lazy var sloganView: UIImageView = {
         let sv = UIImageView(image: UIImage(named: "app_slogan"))
-        let centerX: CGFloat = self.ADScreenW * 0.5
-        let centerEndY: CGFloat = self.ADScreenH * 0.2
-        let centerBeginY: CGFloat = centerEndY - self.ADScreenH
+        let centerX: CGFloat = ADScreenW * 0.5
+        let centerEndY: CGFloat = ADScreenH * 0.2
+        let centerBeginY: CGFloat = centerEndY - ADScreenH
         sv.center = CGPoint(x: centerBeginY, y: centerBeginY) // 先把sloganView的位置设置在屏幕外. 有了这句话就不会导致sloganView在刚进入界面时停留在界面左上角
         
         // 标语动画

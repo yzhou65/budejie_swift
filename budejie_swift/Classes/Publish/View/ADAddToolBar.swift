@@ -30,7 +30,7 @@ class ADAddToolBar: UIView {
         //添加一个加号按钮
         let addButton = UIButton()
         addButton.setImage(UIImage(named: "tag_add_icon"), for: UIControlState.normal)
-        addButton.frame = CGRect(origin: CGPoint(x: self.ADTagMargin, y: 0), size: addButton.currentImage!.size)
+        addButton.frame = CGRect(origin: CGPoint(x: ADTagMargin, y: 0), size: addButton.currentImage!.size)
         addButton.addTarget(self, action: #selector(addButtonTapped), for: UIControlEvents.touchUpInside)
         return addButton
     }()

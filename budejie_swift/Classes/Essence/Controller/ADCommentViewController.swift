@@ -377,11 +377,11 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
         //添加cell到这个header上面
         let cell = ADTopicCell.cell()
         cell.topic = self.topic!
-        cell.frame = CGRect(origin: header.bounds.origin, size: CGSize(width: self.ADScreenW, height: self.topic!.topicHeight()))   // 此处重新计算了topicHeight, 因为上面清空了top_cmt并且归零了cellHeight
+        cell.frame = CGRect(origin: header.bounds.origin, size: CGSize(width: ADScreenW, height: self.topic!.topicHeight()))   // 此处重新计算了topicHeight, 因为上面清空了top_cmt并且归零了cellHeight
         header.addSubview(cell)
         
         //header高度
-        header.height = self.topic!.topicHeight() + self.ADTopicCellMargin
+        header.height = self.topic!.topicHeight() + ADTopicCellMargin
 //        print("header.frame: \(header.frame), cell.frame: \(cell.frame)")
         return header
     }()

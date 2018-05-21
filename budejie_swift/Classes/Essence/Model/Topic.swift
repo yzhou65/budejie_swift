@@ -1,28 +1,29 @@
 //
-//  ADTopic.swift
+//  Topic.swift
 //  budejie_swift
 //
-//  Created by Yue Zhou on 3/4/18.
+//  Created by Yue Zhou on 5/20/18.
 //  Copyright © 2018 Yue Zhou. All rights reserved.
 //
 
 import UIKit
+import HandyJSON
 
-class ADTopic: NSObject {
+struct Topic: HandyJSON {
     //MARK: - 成员变量
     /** id */
-    var id: String?
+    var id: String = ""
     /** 名称 */
-    var name: String?
+    var name: String = ""
     /** 头像 */
-    var profile_image: String?
+    var profile_image: String = ""
     /** 发帖时间 */
-    var create_time: String? {
+    var create_time: String = "" {
         didSet {
             //日期格式化类
             let fmt = DateFormatter()
             fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let create = fmt.date(from: create_time!)!
+            let create = fmt.date(from: create_time)!
             if create.isThisYear() {
                 if create.isToday() {
                     let comps = Date().timeElapsed(from: create)
@@ -51,25 +52,25 @@ class ADTopic: NSObject {
     }
     
     /** 按一定格式自定义的发帖时间 */
-    var createTime: String?
+    var createTime: String = ""
     /** 文字内容 */
-    var text: String?
+    var text: String = ""
     /** 被顶的数量 */
-    var ding: NSNumber?
+    var ding: Int = 0
     /** 被踩的数量 */
-    var cai: NSNumber?
+    var cai: Int = 0
     /** 被转发的数量 */
-    var favourite: NSNumber?
+    var favourite: Int = 0
     /** 评论的数量 */
-    var comment: NSNumber?
+    var comment: Int = 0
     /** 是否为新浪加V用户 */
     var sina_v: Bool = false
-//    @property(assign, nonatomic, getter=isSina_v) BOOL sina_v;
+    //    @property(assign, nonatomic, getter=isSina_v) BOOL sina_v;
     
     /** 图片的宽度 */
     var width: NSNumber? {
         didSet {
-//            picWidth = CGFloat(width!.floatValue)
+            //            picWidth = CGFloat(width!.floatValue)
         }
     }
     var picWidth: CGFloat {
@@ -79,26 +80,26 @@ class ADTopic: NSObject {
     /** 图片的高度 */
     var height: NSNumber? {
         didSet {
-//            picHeight = CGFloat(height!.floatValue)
+            //            picHeight = CGFloat(height!.floatValue)
         }
     }
     var picHeight: CGFloat {
         return height != nil ? CGFloat(height!.floatValue) : 0
     }
     /** 小图片的URL */
-    var small_image: String?
+    var image0: String = ""    // small_image
     /** 大图片的URL */
-    var large_image: String?
+    var image1: String = ""    // large_image
     /** 中图片的URL */
-    var middle_image: String?
+    var image2: String = ""   // middle_image
     /** 帖子的类型 */
-    var type: NSNumber?
+    var type: Int = 0
     /** 音频时长 */
-    var voicetime: NSNumber?
+    var voicetime: Int = 0
     /** 视频时长 */
-    var videotime: NSNumber?
+    var videotime: Int = 0
     /** 播放次数 */
-    var playcount: NSNumber?
+    var playcount: Int = 0
     
     /** 最热评论（YZComment模型） */
     var top_cmt: [[String: Any]]? {
@@ -110,20 +111,31 @@ class ADTopic: NSObject {
         }
     }
     
+    /** 最热评论（YZComment模型） */
+//    var top_cmt = [Comment]() {
+//        didSet {
+//            if top_cmt.count > 0 {
+//                self.topComment = top_cmt[0]
+////                self.topComment.user = top_cmt[0].user
+//            }
+//        }
+//    }
+    
     //百思不得姐服务器返回的最热评论虽然是个NSArray，但是长度总是1，所以没必要用数组，转而使用YZComment
     var topComment: ADComment?
+//    var topCmt = Comment()
     
     /** qzone_uid */
-    var qzone_uid: String?
+    var qzone_uid: String = ""
     
     
     /** 额外的辅助属性 */
     /** cell的高度.写了readonly以后，系统就不会再自动生成_cellHeight成员变量了 */
     private(set) var cellHeight: CGFloat = 0
-
+    
     /** 图片控件的frame */
-    private(set) var pictureFrame: CGRect?
-
+    private(set) var pictureFrame: CGRect = CGRect.zero
+    
     /** 图片是否太大 */
     var isBigPicture: Bool = false
     
@@ -131,10 +143,10 @@ class ADTopic: NSObject {
     var pictureProgress: CGFloat = 0
     
     /** 声音控件的frame */
-    private(set) var voiceFrame: CGRect?
+    private(set) var voiceFrame: CGRect = CGRect.zero
     
     /** 视频控件的frame */
-    private(set) var videoFrame: CGRect?
+    private(set) var videoFrame: CGRect = CGRect.zero
     
     /**
      模型属性：服务器返回的key
@@ -145,7 +157,7 @@ class ADTopic: NSObject {
     // MARK: - 计算topicCell高度
     
     // 计算一个topicCell的高度
-    func topicHeight() -> CGFloat {
+    mutating func topicHeight() -> CGFloat {
         if self.cellHeight != 0 {
             return self.cellHeight
         }
@@ -153,13 +165,13 @@ class ADTopic: NSObject {
         // 文字的最大尺寸
         let maxSize = CGSize(width: UIScreen.main.bounds.size.width - 2 * ADTopicCellMargin, height: CGFloat(MAXFLOAT))
         // 计算文字高度
-        let textH: CGFloat = self.text!.boundingRect(with: maxSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)], context: nil).size.height
+        let textH: CGFloat = self.text.boundingRect(with: maxSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)], context: nil).size.height
         
         // cell的高度
         var ch = ADTopicCellTextY + textH + ADTopicCellMargin * 2
         
         // 根据帖子类型计算cell的高度
-        if self.type!.intValue == ADTopicType.picture.rawValue {  // 图片帖子
+        if self.type == ADTopicType.picture.rawValue {  // 图片帖子
             if self.picWidth != 0 && self.picHeight != 0 {
                 let pictureW = maxSize.width
                 var pictureH: CGFloat = pictureW * self.picHeight / self.picWidth
@@ -167,7 +179,7 @@ class ADTopic: NSObject {
                 
                 if pictureH > ADTopicCellPictureMaxH {
                     pictureH = ADTopicCellPictureLimitH
-                    self.isBigPicture = true  // 大图
+                    isBigPicture = true  // 大图
                 }
                 
                 // 计算图片控件的frame
@@ -177,7 +189,7 @@ class ADTopic: NSObject {
                 ch += pictureH + ADTopicCellMargin
             }
         }
-        else if self.type!.intValue == ADTopicType.voice.rawValue {     // 声音帖子
+        else if self.type == ADTopicType.voice.rawValue {     // 声音帖子
             let voiceX = ADTopicCellMargin
             let voiceY = ADTopicCellTextY + textH + ADTopicCellMargin * 2
             let voiceW = maxSize.width
@@ -185,7 +197,7 @@ class ADTopic: NSObject {
             self.voiceFrame = CGRect(x: voiceX, y: voiceY, width: voiceW, height: voiceH)
             ch += voiceH + ADTopicCellMargin
         }
-        else if self.type!.intValue == ADTopicType.video.rawValue {     // 视频帖子
+        else if self.type == ADTopicType.video.rawValue {     // 视频帖子
             let videoX = ADTopicCellMargin
             let videoY = ADTopicCellTextY + textH + ADTopicCellMargin * 2
             let videoW = maxSize.width
@@ -210,5 +222,14 @@ class ADTopic: NSObject {
         self.cellHeight = ch
         return ch
     }
+}
 
+
+// 精华Essence部分的帖子种类
+public enum ADTopicType: Int {
+    case all = 1
+    case picture = 10
+    case word = 29
+    case voice = 31
+    case video = 41
 }

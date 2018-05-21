@@ -43,9 +43,9 @@ class ADCommentHeaderView: UITableViewHeaderFooterView {
     /** 文字标签 */
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.textColor = self.adColor(67.0, 67.0, 67.0)
+        label.textColor = adColor(67.0, 67.0, 67.0)
         label.width = 200
-        label.x = self.ADTopicCellMargin
+        label.x = ADTopicCellMargin
         label.autoresizingMask = UIViewAutoresizing.flexibleHeight
         return label
     }()

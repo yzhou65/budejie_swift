@@ -50,7 +50,7 @@ class ADAddTagViewController: UIViewController, UITextFieldDelegate {
         let ab = ADTagButton(type: UIButtonType.custom)
         ab.width = self.contentView.width
         ab.height = 35
-        ab.backgroundColor = self.adColor(74, 139, 209)
+        ab.backgroundColor = adColor(74, 139, 209)
         ab.setTitleColor(UIColor.white, for: UIControlState.normal)
         ab.addTarget(self, action: #selector(addButtonClick), for: UIControlEvents.touchUpInside)
         ab.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
@@ -59,7 +59,7 @@ class ADAddTagViewController: UIViewController, UITextFieldDelegate {
 
         // 让按钮内部的文字和图片都左对齐
         ab.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
-        ab.contentEdgeInsets = UIEdgeInsets(top: 0, left: self.ADTagMargin, bottom: 0, right: self.ADTagMargin)
+        ab.contentEdgeInsets = UIEdgeInsets(top: 0, left: ADTagMargin, bottom: 0, right: ADTagMargin)
         self.contentView.addSubview(ab)
         return ab
     }()
@@ -67,10 +67,10 @@ class ADAddTagViewController: UIViewController, UITextFieldDelegate {
     /** 内容 */
     lazy var contentView: UIView = {
         let cv = UIView()
-        cv.x = self.ADTagMargin
+        cv.x = ADTagMargin
         cv.width = self.view.width - 2 * cv.x
-        cv.y = 64 + self.ADTagMargin
-        cv.height = self.ADScreenH
+        cv.y = 64 + ADTagMargin
+        cv.height = ADScreenH
         
 //        cv.backgroundColor = UIColor.red
 //        self.view.addSubview(cv)

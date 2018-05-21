@@ -173,7 +173,7 @@ class ADEssenceViewController: UIViewController, UIScrollViewDelegate {
     // MARK: - 懒加载
     // 标签栏
     private lazy var titlesView: UIScrollView = {
-        let tv = UIScrollView(frame: CGRect(x: 0, y: self.ADTitlesViewY, width: self.view.width, height: self.ADTitlesViewH))
+        let tv = UIScrollView(frame: CGRect(x: 0, y: ADTitlesViewY, width: self.view.width, height: ADTitlesViewH))
         tv.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         tv.tag = -1
 

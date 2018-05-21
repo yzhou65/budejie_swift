@@ -115,15 +115,15 @@ class ADShowPictureViewController: UIViewController {
         self.scrollView.addSubview(iv)
         
         // 计算图片尺寸
-        let width = self.ADScreenW
+        let width = ADScreenW
         let height = width * self.topic!.picHeight / self.topic!.picWidth
-        if height > self.ADScreenH {
+        if height > ADScreenH {
             iv.frame = CGRect(x: 0, y: 0, width: width, height: height)
             self.scrollView.contentSize = CGSize(width: width, height: height)
         }
         else {
             iv.size = CGSize(width: width, height: height)
-            iv.center = CGPoint(x: self.ADScreenW * 0.5, y: self.ADScreenH * 0.5)
+            iv.center = CGPoint(x: ADScreenW * 0.5, y: ADScreenH * 0.5)
         }
 
         return iv
