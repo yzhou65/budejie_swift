@@ -8,21 +8,36 @@
 
 import UIKit
 
-class ADRecommendTagCell: UITableViewCell {
+class ADRecommendTagCell: UITableViewCell, RegisterCellNib {
     @IBOutlet weak var imageListImageView: UIImageView!
     @IBOutlet weak var themeNameLabel: UILabel!
     @IBOutlet weak var subNumberLabel: UILabel!
     
-    var recommendTag: ADRecommendTag? {
+//    var recommendTag: ADRecommendTag? {
+//        didSet {
+//            self.imageListImageView.setProfileImage(with: recommendTag!.image_list!)
+//            self.themeNameLabel.text = recommendTag!.theme_name!
+//
+//            var subNumber = ""
+//            if recommendTag!.sub_number!.intValue < 10000 {
+//                subNumber = "\(recommendTag!.sub_number!)人订阅"
+//            } else {
+//                subNumber = String(format: "%.1f万人订阅", recommendTag!.sub_number!.floatValue / 10000.0)
+//            }
+//            self.subNumberLabel.text = subNumber
+//        }
+//    }
+    
+    var recommendTag = RecommendTag() {
         didSet {
-            self.imageListImageView.setProfileImage(with: recommendTag!.image_list!)
-            self.themeNameLabel.text = recommendTag!.theme_name!
+            self.imageListImageView.setProfileImage(with: recommendTag.image_list)
+            self.themeNameLabel.text = recommendTag.theme_name
             
             var subNumber = ""
-            if recommendTag!.sub_number!.intValue < 10000 {
-                subNumber = "\(recommendTag!.sub_number!)人订阅"
+            if recommendTag.sub_number < 10000 {
+                subNumber = "\(recommendTag.sub_number)人订阅"
             } else {
-                subNumber = String(format: "%.1f万人订阅", recommendTag!.sub_number!.floatValue / 10000.0)
+                subNumber = String(format: "%.1f万人订阅", Float(recommendTag.sub_number) / 10000.0)
             }
             self.subNumberLabel.text = subNumber
         }

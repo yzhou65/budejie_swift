@@ -78,7 +78,7 @@ class ADMeViewController: UITableViewController {
     }
     
     @objc private func nightClick() {
-        adPrint(#function)
+        print(#function)
     }
 
     // MARK: - Table view data source

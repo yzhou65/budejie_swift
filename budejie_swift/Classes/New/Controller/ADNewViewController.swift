@@ -29,7 +29,7 @@ class ADNewViewController: ADEssenceViewController {
     }
     
     @objc private func tagTapped() {
-        adPrint(#function)
+        print(#function)
     }
 
 }

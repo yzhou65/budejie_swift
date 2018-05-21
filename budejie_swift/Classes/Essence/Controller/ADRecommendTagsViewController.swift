@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import SwiftyJSON
 
 //private let url = "https://api.budejie.com/api/api_open.php"
 private let id = "tag"
@@ -28,7 +29,9 @@ class ADRecommendTagsViewController: UITableViewController {
     private func configTableView() {
         self.title = "推荐标签"
         
-        self.tableView.register(UINib(nibName: String(describing: ADRecommendTagCell.self), bundle: nil), forCellReuseIdentifier: id)
+//        self.tableView.register(UINib(nibName: String(describing: ADRecommendTagCell.self), bundle: nil), forCellReuseIdentifier: id)
+        
+        self.tableView.ad_registerCell(with: ADRecommendTagCell.self)
         self.tableView.rowHeight = 70
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         self.tableView.backgroundColor = adGlobalColor()
@@ -44,13 +47,18 @@ class ADRecommendTagsViewController: UITableViewController {
         self.networkManager.get(budejie_url, parameters: params, progress: nil, success: { (_, response) in
             SVProgressHUD.dismiss()
             
-//            self.adPrint(response)
-            let dict = response as! [[String: Any]]
-            self.recommendTags = ADRecommendTag.objectsWithDictionaries(dictArr: dict) as! [ADRecommendTag]
-            self.recommendTags = ADRecommendTag.objectsWithDictionaries(dictArr: dict, replacedKeyNames: nil) as! [ADRecommendTag]
+//            let dict = response as! [[String: Any]]
+//            self.recommendTags = ADRecommendTag.objectsWithDictionaries(dictArr: dict) as! [ADRecommendTag]
+//            self.recommendTags = ADRecommendTag.objectsWithDictionaries(dictArr: dict, replacedKeyNames: nil) as! [ADRecommendTag]
             
-            // 刷新表格
-            self.tableView.reloadData()
+            guard response != nil else { return }
+            if let datas = JSON(response!).arrayObject {
+                let recommendTags = datas.compactMap({ RecommendTag.deserialize(from: $0 as? Dictionary) })
+                self.recommendTags = recommendTags
+                
+                // 刷新表格
+                self.tableView.reloadData()
+            }
             
         }) { (_, error) in
             SVProgressHUD.showError(withStatus: "加载推荐标签失败")
@@ -64,12 +72,14 @@ class ADRecommendTagsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: id) as! ADRecommendTagCell
+//        let cell = tableView.dequeueReusableCell(withIdentifier: id) as! ADRecommendTagCell
+        let cell = tableView.ad_dequeueReusableCell(indexPath: indexPath) as ADRecommendTagCell
         cell.recommendTag = self.recommendTags[indexPath.row]
         return cell
     }
 
     // MARK: - 懒加载
     private lazy var networkManager = ADNetworkManager.shared()
-    private lazy var recommendTags = [ADRecommendTag]()
+//    private lazy var recommendTags = [ADRecommendTag]()
+    private lazy var recommendTags = [RecommendTag]()
 }

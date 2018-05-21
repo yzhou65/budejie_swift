@@ -16,38 +16,89 @@ class ADTopicPictureView: UIView, UIViewControllerPreviewingDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var progressView: ADProgressView!
 
-    var topic: ADTopic? {
+//    var topic: ADTopic? {
+//        didSet {
+//            //避免网速慢，导致cell的循环利用出错.要在每次进入的时候立刻显示最新的图片下载进度。防止因为网速慢，导致显示的是其他图片的下载进度
+//            self.progressView.setProgress(topic!.pictureProgress, animated: false)
+//
+//            /**
+//             在不知道图片扩展名的情况下，如何知道图片的真实类型？
+//             取出图片数据的第一个字节，就可以判断出图片的真实类型
+//             */
+//            //设置图片
+//            self.imageView.sd_setImage(with: URL(string: topic!.large_image!)!, placeholderImage: nil, options: SDWebImageOptions.init(rawValue: 0), progress: { (receivedSize: Int, expectedSize: Int) in
+//                self.progressView.isHidden = false
+//
+//                // 计算进度
+//                let progress = 1.0 * CGFloat(receivedSize) / CGFloat(expectedSize)
+//                self.topic!.pictureProgress = progress
+//
+//                // 显示进度
+//                self.progressView.setProgress(progress, animated: false)
+//
+//            }) { (image: UIImage?, _, _, _) in
+//                self.progressView.isHidden = true
+//                if !self.topic!.isBigPicture {
+//                    return
+//                }
+//
+//                // 开启图形上下文
+//                UIGraphicsBeginImageContext(self.topic!.pictureFrame!.size)
+//
+//
+//                // 将下载完成的image对象绘制到图形上下文
+//                let width = self.topic!.pictureFrame!.size.width
+//                let height = width * image!.height / image!.width
+//                image!.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+//
+//                // 获得新图片
+//                self.imageView.image = UIGraphicsGetImageFromCurrentImageContext()!
+//
+//                // 结束上下文
+//                UIGraphicsEndImageContext()
+//            }
+//
+//            //判断是否为gif
+//            let ext = (topic!.large_image! as NSString).pathExtension
+//            self.gifView.isHidden = (ext.lowercased() != "gif")
+//
+//            //判断是否显示“点击查看全图”
+//            self.seeBigButton.isHidden = !topic!.isBigPicture
+//        }
+//    }
+    
+    var topic: Topic = Topic() {
         didSet {
             //避免网速慢，导致cell的循环利用出错.要在每次进入的时候立刻显示最新的图片下载进度。防止因为网速慢，导致显示的是其他图片的下载进度
-            self.progressView.setProgress(topic!.pictureProgress, animated: false)
+            self.progressView.setProgress(topic.pictureProgress, animated: false)
             
             /**
              在不知道图片扩展名的情况下，如何知道图片的真实类型？
              取出图片数据的第一个字节，就可以判断出图片的真实类型
              */
             //设置图片
-            self.imageView.sd_setImage(with: URL(string: topic!.large_image!)!, placeholderImage: nil, options: SDWebImageOptions.init(rawValue: 0), progress: { (receivedSize: Int, expectedSize: Int) in
+            self.imageView.sd_setImage(with: URL(string: topic.image1)!, placeholderImage: nil, options: SDWebImageOptions.init(rawValue: 0), progress: { (receivedSize: Int, expectedSize: Int) in
                 self.progressView.isHidden = false
                 
                 // 计算进度
                 let progress = 1.0 * CGFloat(receivedSize) / CGFloat(expectedSize)
-                self.topic!.pictureProgress = progress
+                self.topic.pictureProgress = progress
                 
                 // 显示进度
                 self.progressView.setProgress(progress, animated: false)
                 
             }) { (image: UIImage?, _, _, _) in
                 self.progressView.isHidden = true
-                if !self.topic!.isBigPicture {
+                if !self.topic.isBigPicture {
                     return
                 }
                 
                 // 开启图形上下文
-                UIGraphicsBeginImageContext(self.topic!.pictureFrame!.size)
+                UIGraphicsBeginImageContext(self.topic.pictureFrame.size)
                 
                 
                 // 将下载完成的image对象绘制到图形上下文
-                let width = self.topic!.pictureFrame!.size.width
+                let width = self.topic.pictureFrame.size.width
                 let height = width * image!.height / image!.width
                 image!.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
                 
@@ -59,11 +110,11 @@ class ADTopicPictureView: UIView, UIViewControllerPreviewingDelegate {
             }
             
             //判断是否为gif
-            let ext = (topic!.large_image! as NSString).pathExtension
+            let ext = (topic.image1 as NSString).pathExtension
             self.gifView.isHidden = (ext.lowercased() != "gif")
             
             //判断是否显示“点击查看全图”
-            self.seeBigButton.isHidden = !topic!.isBigPicture
+            self.seeBigButton.isHidden = !topic.isBigPicture
         }
     }
     

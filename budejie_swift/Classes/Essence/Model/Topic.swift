@@ -18,41 +18,39 @@ struct Topic: HandyJSON {
     /** 头像 */
     var profile_image: String = ""
     /** 发帖时间 */
-    var create_time: String = "" {
-        didSet {
-            //日期格式化类
-            let fmt = DateFormatter()
-            fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let create = fmt.date(from: create_time)!
-            if create.isThisYear() {
-                if create.isToday() {
-                    let comps = Date().timeElapsed(from: create)
-                    if comps.hour! >= 1 {   // 时间差距 >= 1小时
-                        self.createTime = "\(comps.hour!)小时前"
-                    }
-                    else if comps.minute! >= 1 { // 1小时 > 时间差距 >= 1分钟
-                        self.createTime = "\(comps.minute!)分钟前"
-                    }
-                    else {  // 1分钟 > 时间差距
-                        self.createTime = "刚刚"
-                    }
-                }
-                else if create.isYesterday() {
-                    fmt.dateFormat = "昨天 HH:mm:ss"
-                    self.createTime = fmt.string(from: create)
-                } else {
-                    fmt.dateFormat = "MM-dd HH:mm:ss"
-                    self.createTime = fmt.string(from: create)
-                }
-            }
-            else {  // 非今年
-                createTime = create_time
-            }
-        }
-    }
+    var create_time: String = ""
     
     /** 按一定格式自定义的发帖时间 */
-    var createTime: String = ""
+    var createTime: String? {
+        //日期格式化类
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let create = fmt.date(from: create_time)!
+        if create.isThisYear() {
+            if create.isToday() {
+                let comps = Date().timeElapsed(from: create)
+                if comps.hour! >= 1 {   // 时间差距 >= 1小时
+                    return "\(comps.hour!)小时前"
+                }
+                else if comps.minute! >= 1 { // 1小时 > 时间差距 >= 1分钟
+                    return "\(comps.minute!)分钟前"
+                }
+                else {  // 1分钟 > 时间差距
+                    return "刚刚"
+                }
+            }
+            else if create.isYesterday() {
+                fmt.dateFormat = "昨天 HH:mm:ss"
+                return fmt.string(from: create)
+            } else {
+                fmt.dateFormat = "MM-dd HH:mm:ss"
+                return fmt.string(from: create)
+            }
+        }
+        else {  // 非今年
+            return create_time
+        }
+    }
     /** 文字内容 */
     var text: String = ""
     /** 被顶的数量 */
@@ -68,23 +66,16 @@ struct Topic: HandyJSON {
     //    @property(assign, nonatomic, getter=isSina_v) BOOL sina_v;
     
     /** 图片的宽度 */
-    var width: NSNumber? {
-        didSet {
-            //            picWidth = CGFloat(width!.floatValue)
-        }
-    }
+    var width: Int = 0
     var picWidth: CGFloat {
-        
-        return width != nil ? CGFloat(width!.floatValue) : 0
+        return CGFloat(width)
+//        return width != nil ? CGFloat(width!.floatValue) : 0
     }
     /** 图片的高度 */
-    var height: NSNumber? {
-        didSet {
-            //            picHeight = CGFloat(height!.floatValue)
-        }
-    }
+    var height: Int = 0
     var picHeight: CGFloat {
-        return height != nil ? CGFloat(height!.floatValue) : 0
+        return CGFloat(height)
+//        return height != nil ? CGFloat(height!.floatValue) : 0
     }
     /** 小图片的URL */
     var image0: String = ""    // small_image
@@ -102,28 +93,39 @@ struct Topic: HandyJSON {
     var playcount: Int = 0
     
     /** 最热评论（YZComment模型） */
-    var top_cmt: [[String: Any]]? {
-        didSet {
-            if top_cmt!.count > 0 {
-                self.topComment = ADComment.object(with: top_cmt![0], replacedKeyNames: nil)
-                self.topComment!.user = ADUser.object(with: top_cmt![0]["user"] as! [String : Any], replacedKeyNames: nil)
-            }
-        }
-    }
+//    var top_cmt: [[String: Any]]? {
+//        didSet {
+//            if top_cmt!.count > 0 {
+//                self.topComment = ADComment.object(with: top_cmt![0], replacedKeyNames: nil)
+//                self.topComment!.user = ADUser.object(with: top_cmt![0]["user"] as! [String : Any], replacedKeyNames: nil)
+//            }
+//        }
+//    }
     
     /** 最热评论（YZComment模型） */
-//    var top_cmt = [Comment]() {
+    var top_cmt = [Comment]()
+//    {
 //        didSet {
 //            if top_cmt.count > 0 {
-//                self.topComment = top_cmt[0]
-////                self.topComment.user = top_cmt[0].user
+//                self.topCmt = top_cmt[0]
+////                self.topCmt.user = top_cmt[0].user
 //            }
 //        }
 //    }
     
     //百思不得姐服务器返回的最热评论虽然是个NSArray，但是长度总是1，所以没必要用数组，转而使用YZComment
-    var topComment: ADComment?
-//    var topCmt = Comment()
+//    var topComment: ADComment?
+    var topCmt: Comment? {
+//        if top_cmt.count > 0 {
+//            return top_cmt[0]
+//        }
+        get {
+            return top_cmt.count > 0 ? top_cmt[0] : nil
+        }
+        set(newValue) {
+            topCmt = newValue
+        }
+    }
     
     /** qzone_uid */
     var qzone_uid: String = ""
@@ -131,7 +133,7 @@ struct Topic: HandyJSON {
     
     /** 额外的辅助属性 */
     /** cell的高度.写了readonly以后，系统就不会再自动生成_cellHeight成员变量了 */
-    private(set) var cellHeight: CGFloat = 0
+     var cellHeight: CGFloat = 0
     
     /** 图片控件的frame */
     private(set) var pictureFrame: CGRect = CGRect.zero
@@ -210,10 +212,16 @@ struct Topic: HandyJSON {
         }
         
         //如果有最热评论，还要将最热评论的高度计入，否则最热评论会挡住帖子内容
-        if let topComment = self.topComment {
-            let top = "\(topComment.user!.username ?? ""): \(topComment.content ?? "")"
+//        if let topComment = self.topComment {
+//            let top = "\(topComment.user!.username ?? ""): \(topComment.content ?? "")"
+//            let topH = top.boundingRect(with: maxSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)], context: nil).size.height
+//
+//            ch += ADTopicCellTopCmtTitleH + topH + ADTopicCellMargin
+//        }
+        
+        if let topCmt = self.topCmt {
+            let top = "\(topCmt.user.username): \(topCmt.content)"
             let topH = top.boundingRect(with: maxSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)], context: nil).size.height
-            
             ch += ADTopicCellTopCmtTitleH + topH + ADTopicCellMargin
         }
         

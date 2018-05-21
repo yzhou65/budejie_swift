@@ -12,15 +12,26 @@ class ADTopicVideoView: UIView {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var playcountLabel: UILabel!
     @IBOutlet weak var videotimeLabel: UILabel!
-    var topic: ADTopic? {
+//    var topic: ADTopic? {
+//        didSet {
+//            self.imageView.sd_setImage(with: URL(string: topic!.large_image!))
+//
+//            //播放次数
+//            self.playcountLabel.text = "\(topic!.playcount!)播放"
+//
+//            //播放时长
+//            self.videotimeLabel.text = String(format: "%02zd:%02zd", topic!.videotime!.intValue / 60, topic!.voicetime!.intValue % 60)  //分和秒都要2位，不满2位用0填补。
+//        }
+//    }
+    var topic: Topic = Topic() {
         didSet {
-            self.imageView.sd_setImage(with: URL(string: topic!.large_image!))
+            self.imageView.sd_setImage(with: URL(string: topic.image1))
             
             //播放次数
-            self.playcountLabel.text = "\(topic!.playcount!)播放"
+            self.playcountLabel.text = "\(topic.playcount)播放"
             
             //播放时长
-            self.videotimeLabel.text = String(format: "%02zd:%02zd", topic!.videotime!.intValue / 60, topic!.voicetime!.intValue % 60)  //分和秒都要2位，不满2位用0填补。
+            self.videotimeLabel.text = String(format: "%02zd:%02zd", topic.videotime / 60, topic.voicetime % 60)  //分和秒都要2位，不满2位用0填补。
         }
     }
     

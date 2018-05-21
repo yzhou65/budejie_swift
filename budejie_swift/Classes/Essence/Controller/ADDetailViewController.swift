@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ADDetailViewController: UIViewController {
+class ADDetailViewController: UIViewController, NibLoadable {
     @IBOutlet weak var imageView: UIImageView!
     
     var photo: UIImage? 

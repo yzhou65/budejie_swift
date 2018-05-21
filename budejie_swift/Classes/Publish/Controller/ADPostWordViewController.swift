@@ -39,7 +39,7 @@ class ADPostWordViewController: UIViewController, UITextViewDelegate {
     }
     
     @objc private func post() {
-        adPrint(#function)
+        print(#function)
     }
     
     

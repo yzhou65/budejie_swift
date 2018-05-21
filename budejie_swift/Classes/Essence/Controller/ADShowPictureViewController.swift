@@ -11,6 +11,8 @@ import SVProgressHUD
 import SDWebImage
 import Photos
 import ReactiveCocoa
+import RxCocoa
+import RxSwift
 
 class ADShowPictureViewController: UIViewController {
     // MARK: - 子控件, 成员变量
@@ -19,45 +21,32 @@ class ADShowPictureViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
-    var topic: ADTopic?
+//    var topic: ADTopic?
+    var topic: Topic = Topic()
     
     // MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //立刻显示当前图片下载进度, 否则会因为循环引用出问题
-        self.progressView.setProgress(self.topic!.pictureProgress, animated: false)
+        self.progressView.setProgress(self.topic.pictureProgress, animated: false)
         
         //下载图片
-        self.imageView.sd_setImage(with: URL(string: self.topic!.large_image!), placeholderImage: nil, options: SDWebImageOptions.init(rawValue: 0), progress: { (received: Int, expected: Int) in
+        self.imageView.sd_setImage(with: URL(string: self.topic.image1), placeholderImage: nil, options: SDWebImageOptions.init(rawValue: 0), progress: { (received: Int, expected: Int) in
             
             self.progressView.setProgress(1.0 * CGFloat(received) / CGFloat(expected), animated: false)
         }) { (_, _, _, _) in
             self.progressView.isHidden = true
         }
         
-        self.backButton.reactive.controlEvents(UIControlEvents.touchUpInside).observeValues { [unowned self] (_) in
-            self.dismiss(animated: true, completion: nil)
-        }
-        
-//        self.saveButton.reactive.trigger(for: UIControlEvents.touchUpInside).observeValues { [unowned self] (_) in
-//            if self.imageView.image == nil {
-//                SVProgressHUD.showError(withStatus: "图片未成功下载完")
-//                return
-//            }
-//            UIImageWriteToSavedPhotosAlbum(self.imageView.image!, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+        /// 点击返回按钮
+//        self.backButton.reactive.controlEvents(UIControlEvents.touchUpInside).observeValues { [unowned self] (_) in
+//            self.dismiss(animated: true, completion: nil)
 //        }
-//
-//        self.saveButton.reactive.controlEvents(UIControlEvents.touchUpInside).observeValues { [unowned self](_) in
-//            guard let image = self.imageView.image else {
-//                SVProgressHUD.showError(withStatus: "图片未成功下载完")
-//                return
-//            }
-//            UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-//        }
-        
-        
-//        self.saveButton.addTarget(self, action: #selector(savePhoto), for: .touchUpInside)
+        self.backButton.rx.controlEvent(UIControlEvents.touchUpInside).subscribe(onNext: { [weak self] in
+            self?.dismiss(animated: true, completion: nil)
+            
+        }).disposed(by: disposeBag)
     }
     
     // MARK: - 按钮监听
@@ -116,7 +105,7 @@ class ADShowPictureViewController: UIViewController {
         
         // 计算图片尺寸
         let width = ADScreenW
-        let height = width * self.topic!.picHeight / self.topic!.picWidth
+        let height = width * self.topic.picHeight / self.topic.picWidth
         if height > ADScreenH {
             iv.frame = CGRect(x: 0, y: 0, width: width, height: height)
             self.scrollView.contentSize = CGSize(width: width, height: height)
@@ -125,16 +114,22 @@ class ADShowPictureViewController: UIViewController {
             iv.size = CGSize(width: width, height: height)
             iv.center = CGPoint(x: ADScreenW * 0.5, y: ADScreenH * 0.5)
         }
-
         return iv
     }()
+    
+    private lazy var disposeBag = DisposeBag()
     
     
     // MARK: - 构造
     init() {
         super.init(nibName: nil, bundle: nil)
     }
-    init(topic: ADTopic?) {
+//    init(topic: ADTopic?) {
+//        super.init(nibName: nil, bundle: nil)
+//        self.topic = topic
+//    }
+    
+    init(topic: Topic) {
         super.init(nibName: nil, bundle: nil)
         self.topic = topic
     }

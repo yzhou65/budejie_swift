@@ -9,6 +9,7 @@
 import UIKit
 import MJRefresh
 import SVProgressHUD
+import SwiftyJSON
 
 private let id = "topic"
 
@@ -82,7 +83,8 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
 //        self.tableView.estimatedRowHeight = 250
         
         // 注册cell
-        self.tableView.register(UINib(nibName: String(describing: ADTopicCell.self), bundle: nil), forCellReuseIdentifier: id)
+//        self.tableView.register(UINib(nibName: String(describing: ADTopicCell.self), bundle: nil), forCellReuseIdentifier: id)
+        self.tableView.ad_registerCell(with: ADTopicCell.self)
         
         //监听tabBar点击的通知. 点击"精华"就刷新其内容
         NotificationCenter.default.addObserver(self, selector: #selector(tabBarSelected), name: ADNotification.tabBarDidSelect.notificationName, object: nil)
@@ -126,22 +128,35 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
             
             //存储maxtime
 //            print(response)
-            let dict = response as! [String: Any]
-//            print(dict)
-            self.maxtime = (dict["info"] as! [String: Any])["maxtime"] as? String
+            guard response != nil else { return }
+            let json = JSON(response!)
+            
+            print(json)
+            let info = json["info"].dictionary
+            let maxtime = info!["maxtime"]?.string
+            self.maxtime = maxtime
             
             //字典 -> 模型
-            let topics = ADTopic.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]], replacedKeyNames: ADTopic.replacedKeyFromPropertyName) as! [ADTopic]
-            self.topics = topics
+//            let topics = ADTopic.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]], replacedKeyNames: ADTopic.replacedKeyFromPropertyName) as! [ADTopic]
+//            self.topics = topics
             
-            //刷新表格
-            self.tableView.reloadData()
             
-            //结束刷新
-            self.tableView.mj_header.endRefreshing()
+            if let datas = json["list"].arrayObject {
+                var topics = [Topic]()
+                topics = datas.compactMap({ Topic.deserialize(from: $0 as? Dictionary)})
+                self.topics = topics
+//                self.topics = datas.compactMap({ Topic.deserialize(from: $0 as? Dictionary)})
+                
+                //刷新表格
+                self.tableView.reloadData()
+                
+                //结束刷新
+                self.tableView.mj_header.endRefreshing()
+                
+                //页码
+                self.page = 0;
+            }
             
-            //页码
-            self.page = 0;
         }) { (_, error) in
             SVProgressHUD.showError(withStatus: "加载数据失败")
             if self.params != params { return }
@@ -174,21 +189,34 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
             if self.params != params { return }
             
             // 存储maxtime
-//            print(response)
-            let dict = response as! [String: Any]
-            self.maxtime = (dict["info"] as! [String: Any])["maxtime"] as! String?
+            guard response != nil else { return }
+            let json = JSON(response!)
+//            print(json)
             
-            let moreTopics = ADTopic.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]], replacedKeyNames: ADTopic.replacedKeyFromPropertyName) as! [ADTopic]
-            self.topics.append(contentsOf: moreTopics)
+//            let dict = response as! [String: Any]
+//            self.maxtime = (dict["info"] as! [String: Any])["maxtime"] as! String?
+            self.maxtime = (json["info"].dictionary)!["maxtime"]?.string
             
-            // 刷新表格
-            self.tableView.reloadData()
+//            let moreTopics = ADTopic.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]], replacedKeyNames: ADTopic.replacedKeyFromPropertyName) as! [ADTopic]
+//            self.topics.append(contentsOf: moreTopics)
             
-            // 结束刷新
-            self.tableView.mj_footer.endRefreshing()
             
-            // 存储页码
-            self.page = page
+            if let datas = json["list"].arrayObject {
+                let moreTopics = datas.compactMap({ Topic.deserialize(from: $0 as? Dictionary)})
+                self.topics += moreTopics
+                
+                //                    completionHandler(titles)
+                
+                // 刷新表格
+                self.tableView.reloadData()
+                
+                // 结束刷新
+                self.tableView.mj_footer.endRefreshing()
+                
+                // 存储页码
+                self.page = page
+            }
+            
             
         }) { (_, error) in
             SVProgressHUD.showError(withStatus: "加载数据失败")
@@ -205,11 +233,12 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
         return count
     }
 
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: id) as! ADTopicCell
-        let topic = self.topics[indexPath.row]
+//        let cell = tableView.dequeueReusableCell(withIdentifier: id) as! ADTopicCell
+        let cell = tableView.ad_dequeueReusableCell(indexPath: indexPath) as ADTopicCell
+        var topic = self.topics[indexPath.row]
         let _ = topic.topicHeight()
+        
         cell.topic = topic
         return cell
     }
@@ -240,7 +269,7 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
         let cell = self.tableView.cellForRow(at: indexPath) as! ADTopicCell
         let point = self.tableView.convert(location, to: cell)
 //        print(point)
-        if cell.topic!.type!.intValue == ADTopicType.picture.rawValue && cell.pictureView.frame.contains(point) {
+        if cell.topic.type == ADTopicType.picture.rawValue && cell.pictureView.frame.contains(point) {
            
             let detailVC = ADDetailViewController(nibName: "ADDetailViewController", bundle: nil)
             let image = cell.pictureView.imageView.image
@@ -266,7 +295,8 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
     
     // MARK: - 懒加载
     /** 帖子数据 */
-    private lazy var topics: [ADTopic] = [ADTopic]()
+//    private lazy var topics: [ADTopic] = [ADTopic]()
+    private lazy var topics: [Topic] = [Topic]()
     private lazy var networkManager = ADNetworkManager.shared()
     
 }

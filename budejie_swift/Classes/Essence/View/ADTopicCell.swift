@@ -9,7 +9,7 @@
 import UIKit
 import ReactiveCocoa
 
-class ADTopicCell: UITableViewCell {
+class ADTopicCell: UITableViewCell, RegisterCellNib {
     // MARK: - 成员变量, 子控件
     /** 头像 */
     @IBOutlet weak var profileImageView: UIImageView!
@@ -36,52 +36,120 @@ class ADTopicCell: UITableViewCell {
     
     @IBOutlet weak var bottomToolBar: UIView!
     
-    var topic: ADTopic? {
+//    var topic: ADTopic? {
+//        didSet {
+////            print(topic!)
+//            // 新浪vip
+////            let t = topic!
+//            self.sina_vView.isHidden = !topic!.sina_v
+//
+//            //设置头像
+//            self.profileImageView.setProfileImage(with: topic!.profile_image!)
+//
+//            //设置名字
+//            self.nameLabel.text = topic!.name!
+//
+//            //设置帖子的创建时间
+//            self.createTimeLabel.text = topic!.createTime!
+//
+//            //设置按钮文字
+//            self.setButtonTitle(with: self.dingBtn, count: topic!.ding!.intValue, placeholder: "顶")
+//            self.setButtonTitle(with: self.caiBtn, count: topic!.cai!.intValue, placeholder: "踩")
+//            self.setButtonTitle(with: self.shareBtn, count: topic!.favourite!.intValue, placeholder: "分享")
+//            self.setButtonTitle(with: self.commentBtn, count: topic!.comment!.intValue, placeholder: "评论")
+//
+//            //设置帖子的文字内容
+//            self.text_label.text = topic!.text!
+//
+//            //根据帖子类型添加对应的内容到cell的中间。在“全部”中，cell的循环利用可能导致图片声音视频和段子显示混乱，所以要显示自己，隐藏其他。
+//            if topic!.type!.intValue == ADTopicType.picture.rawValue { //图片帖子
+//                self.pictureView.isHidden = false
+//                self.pictureView.topic = topic;
+//                self.pictureView.frame = topic!.pictureFrame!
+//
+//                self.voiceView.isHidden = true
+//                self.videoView.isHidden = true
+//            }
+//            else if topic!.type!.intValue == ADTopicType.voice.rawValue { //声音帖子
+//                self.voiceView.isHidden = false
+//                self.voiceView.topic = topic
+//                self.voiceView.frame = topic!.voiceFrame!
+//
+//                self.pictureView.isHidden = true
+//                self.videoView.isHidden = true
+//            }
+//            else if topic!.type!.intValue == ADTopicType.video.rawValue { //视频帖子
+//                self.videoView.isHidden = false
+//                self.videoView.topic = topic;
+//                self.videoView.frame = topic!.videoFrame!
+//
+//                self.voiceView.isHidden = true
+//                self.pictureView.isHidden = true
+//            }
+//            else { //段子帖子
+//                //在全部中会循环利用cell，所以显示段子时要隐藏其他元素，然后在显示图片声音视频时再显示回来。
+//                self.videoView.isHidden = true
+//                self.voiceView.isHidden = true
+//                self.pictureView.isHidden = true
+//            }
+////
+//            //处理最热评论
+//            if topic!.topComment == nil {
+//                self.topCmtView.isHidden = true
+//                return
+//            }
+//            self.topCmtView.isHidden = false //循环利用：隐藏过的要重新显现
+//
+//            // 给最热评论设置文字
+////            let tl = topic!.topComment
+//            self.topCmtContentLabel.text = "\(topic!.topComment!.user!.username!): \(topic!.topComment!.content!)"
+//        }
+//    }
+    
+    
+    var topic: Topic = Topic() {
         didSet {
-//            print(topic!)
-            // 新浪vip
-//            let t = topic!
-            self.sina_vView.isHidden = !topic!.sina_v
+            self.sina_vView.isHidden = !topic.sina_v
             
             //设置头像
-            self.profileImageView.setProfileImage(with: topic!.profile_image!)
+            self.profileImageView.setProfileImage(with: topic.profile_image)
             
             //设置名字
-            self.nameLabel.text = topic!.name!
+            self.nameLabel.text = topic.name
             
             //设置帖子的创建时间
-            self.createTimeLabel.text = topic!.createTime!
+            self.createTimeLabel.text = topic.createTime
             
             //设置按钮文字
-            self.setButtonTitle(with: self.dingBtn, count: topic!.ding!.intValue, placeholder: "顶")
-            self.setButtonTitle(with: self.caiBtn, count: topic!.cai!.intValue, placeholder: "踩")
-            self.setButtonTitle(with: self.shareBtn, count: topic!.favourite!.intValue, placeholder: "分享")
-            self.setButtonTitle(with: self.commentBtn, count: topic!.comment!.intValue, placeholder: "评论")
+            self.setButtonTitle(with: self.dingBtn, count: topic.ding, placeholder: "顶")
+            self.setButtonTitle(with: self.caiBtn, count: topic.cai, placeholder: "踩")
+            self.setButtonTitle(with: self.shareBtn, count: topic.favourite, placeholder: "分享")
+            self.setButtonTitle(with: self.commentBtn, count: topic.comment, placeholder: "评论")
             
             //设置帖子的文字内容
-            self.text_label.text = topic!.text!
+            self.text_label.text = topic.text
             
             //根据帖子类型添加对应的内容到cell的中间。在“全部”中，cell的循环利用可能导致图片声音视频和段子显示混乱，所以要显示自己，隐藏其他。
-            if topic!.type!.intValue == ADTopicType.picture.rawValue { //图片帖子
+            if topic.type == ADTopicType.picture.rawValue { //图片帖子
                 self.pictureView.isHidden = false
                 self.pictureView.topic = topic;
-                self.pictureView.frame = topic!.pictureFrame!
+                self.pictureView.frame = topic.pictureFrame
                 
                 self.voiceView.isHidden = true
                 self.videoView.isHidden = true
             }
-            else if topic!.type!.intValue == ADTopicType.voice.rawValue { //声音帖子
+            else if topic.type == ADTopicType.voice.rawValue { //声音帖子
                 self.voiceView.isHidden = false
                 self.voiceView.topic = topic
-                self.voiceView.frame = topic!.voiceFrame!
+                self.voiceView.frame = topic.voiceFrame
                 
                 self.pictureView.isHidden = true
                 self.videoView.isHidden = true
             }
-            else if topic!.type!.intValue == ADTopicType.video.rawValue { //视频帖子
+            else if topic.type == ADTopicType.video.rawValue { //视频帖子
                 self.videoView.isHidden = false
                 self.videoView.topic = topic;
-                self.videoView.frame = topic!.videoFrame!
+                self.videoView.frame = topic.videoFrame
                 
                 self.voiceView.isHidden = true
                 self.pictureView.isHidden = true
@@ -92,17 +160,22 @@ class ADTopicCell: UITableViewCell {
                 self.voiceView.isHidden = true
                 self.pictureView.isHidden = true
             }
-//
+            //
             //处理最热评论
-            if topic!.topComment == nil {
+//            if topic.topComment == nil {
+//                self.topCmtView.isHidden = true
+//                return
+//            }
+            if topic.topCmt == nil {
                 self.topCmtView.isHidden = true
                 return
             }
             self.topCmtView.isHidden = false //循环利用：隐藏过的要重新显现
-          
+            
             // 给最热评论设置文字
-//            let tl = topic!.topComment
-            self.topCmtContentLabel.text = "\(topic!.topComment!.user!.username!): \(topic!.topComment!.content!)"
+            //            let tl = topic!.topComment
+//            self.topCmtContentLabel.text = "\(topic.topComment.user.username!): \(topic.topComment.content)"
+            self.topCmtContentLabel.text = "\(topic.topCmt!.user.username): \(topic.topCmt!.content)"
         }
     }
     
@@ -134,10 +207,10 @@ class ADTopicCell: UITableViewCell {
             var fm = f
 //            fm.size.height -= ADTopicCellMargin; //不要这样写,隐患：如果不停调用setFrame，那么其高度会不断减少
             
-            if let topic = self.topic {
+            var topic = self.topic
                 fm.size.height = topic.topicHeight() - ADTopicCellMargin
 //                print("\(topic.name!): \(self.bottomToolBar.y)....\(self.text_label.frame.maxY)")
-            }
+            
             fm.origin.y += ADTopicCellMargin
             super.frame = fm
         }

@@ -8,8 +8,9 @@
 
 import UIKit
 import MJRefresh
+import SwiftyJSON
 
-private let id = "comment"
+private let id = "ADCommentCell"
 private let headerId = "header"
 
 class ADCommentViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -23,7 +24,8 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
 //    private var hotComments: [ADComment]?
     
     /** 保存帖子的top_cmt */
-    private var saved_top_cmt: ADComment?
+//    private var saved_top_cmt: ADComment?
+    private var saved_top_cmt: Comment?
     
     /** 当前的页码 */
     private var page: Int = 0
@@ -31,7 +33,8 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
     /** 上一次选中的行号 */
     private var selected: IndexPath?
     
-    var topic: ADTopic?
+//    var topic: ADTopic?
+    var topic = Topic()
     
 
     // MARK: - life cycle
@@ -47,9 +50,10 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
         NotificationCenter.default.removeObserver(self)
         
         //恢复帖子的top_cmt
-        if self.topic!.topComment != nil {
-            self.topic!.topComment = self.saved_top_cmt
-            self.topic!.setValue(0, forKey: "cellHeight")   // 归零cellHeight以便deinit后回到外面重新计算
+        if self.topic.topCmt != nil {
+            self.topic.topCmt = self.saved_top_cmt
+//            self.topic!.setValue(0, forKey: "cellHeight")   // 归零cellHeight以便deinit后回到外面重新计算
+            self.topic.cellHeight = 0
         }
 
         //取消所有任务
@@ -70,7 +74,10 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.backgroundColor = adGlobalColor()
         
         //注册自定义cell
-        self.tableView.register(UINib(nibName: String(describing: ADCommentCell.self), bundle: nil), forCellReuseIdentifier: id)
+//        self.tableView.register(UINib(nibName: String(describing: ADCommentCell.self), bundle: nil), forCellReuseIdentifier: id)
+//        self.tableView.register(ADCommentHeaderView.self, forHeaderFooterViewReuseIdentifier: headerId)
+        
+        self.tableView.ad_registerCell(with: ADCommentCell.self)
         self.tableView.register(ADCommentHeaderView.self, forHeaderFooterViewReuseIdentifier: headerId)
         
         //去掉分隔线
@@ -127,7 +134,7 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
 //        [self.manager.tasks makeObjectsPerformSelector:@selector(cancel)];
         
         //参数
-        let params = ["a": "dataList", "c": "comment", "data_id": self.topic!.id, "hot": "1"]
+        let params = ["a": "dataList", "c": "comment", "data_id": self.topic.id, "hot": "1"]
         self.networkManager.get(budejie_url, parameters: params, progress: nil, success: { (_, response) in
 //            print(response!)
             // 如果没有评论数据就返回
@@ -136,20 +143,30 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
                 return
             }
             
+            guard response != nil else { return }
             // 最热评论
-            let dict = response as! [String: Any]
-            let hotComments = ADComment.objectsWithDictionaries(dictArr: dict["hot"] as! [[String : Any]], replacedKeyNames: nil) as! [ADComment]
-//            for (c, d) in zip(hotComments, dict["hot"] as! [[String : Any]]) {
-//                c.user = ADUser.object(with: d["user"] as! [String: Any], replacedKeyNames: nil)
-//            }
-            self.hotComments = hotComments
+//            let dict = response as! [String: Any]
+//            let hotComments = ADComment.objectsWithDictionaries(dictArr: dict["hot"] as! [[String : Any]], replacedKeyNames: nil) as! [ADComment]
+//            self.hotComments = hotComments
+//
+//            // 最新评论
+//            let latestComments = ADComment.objectsWithDictionaries(dictArr: dict["data"] as! [[String : Any]], replacedKeyNames: nil) as! [ADComment]
+//            self.latestComments = latestComments
             
-            // 最新评论
-            let latestComments = ADComment.objectsWithDictionaries(dictArr: dict["data"] as! [[String : Any]], replacedKeyNames: nil) as! [ADComment]
-//            for (c, d) in zip(latestComments, dict["data"] as! [[String : Any]]) {
-//                c.user = ADUser.object(with: d["user"] as! [String: Any], replacedKeyNames: nil)
-//            }
-            self.latestComments = latestComments
+            let json = JSON(response!)
+            if let datas = json["hot"].arrayObject {
+                var hotComments = [Comment]()
+                
+                hotComments = datas.compactMap({ Comment.deserialize(from: $0 as? Dictionary)})
+                self.hotComments = hotComments
+            }
+            if let latestDatas = json["data"].arrayObject {
+                var lastestComments = [Comment]()
+                lastestComments = latestDatas.compactMap({ Comment.deserialize(from: $0 as? Dictionary)})
+                self.latestComments = lastestComments
+            } else {
+                return
+            }
             
             // 页码
             self.page = 1
@@ -162,7 +179,7 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
 //            print(dict["total"]!)
 //            let total = (dict["total"] as! NSString).intValue // 错误
 //            let total = dict["total"]! as! Int    // 错误
-            let total = "\(dict["total"]!)"
+            let total = "\(json["total"])"
 //            print(self.latestComments.count)
             if self.latestComments.count >= Int(total)! {
                 self.tableView.mj_footer.isHidden = true
@@ -184,7 +201,7 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
         let page = self.page + 1
         
         //参数
-        let params = ["a": "dataList", "c": "comment", "data_id": self.topic!.id!, "page": page, "lastcid": self.latestComments.last!.id!] as [String : Any]
+        let params = ["a": "dataList", "c": "comment", "data_id": self.topic.id, "page": page, "lastcid": self.latestComments.last!.id] as [String : Any]
         
         self.networkManager.get(budejie_url, parameters: params, progress: nil, success: { (_, response) in
 //            print(response)
@@ -194,12 +211,20 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
             }
             
             // 最新评论
-            let dict = response as! [String: Any]
-            let moreComments = ADComment.objectsWithDictionaries(dictArr: dict["data"] as! [[String : Any]], replacedKeyNames: nil) as! [ADComment]
-            for (c, d) in zip(moreComments, dict["data"] as! [[String : Any]]) {
-                c.user = ADUser.object(with: d["user"] as! [String: Any], replacedKeyNames: nil)
+//            let dict = response as! [String: Any]
+//            let moreComments = ADComment.objectsWithDictionaries(dictArr: dict["data"] as! [[String : Any]], replacedKeyNames: nil) as! [ADComment]
+//            for (c, d) in zip(moreComments, dict["data"] as! [[String : Any]]) {
+//                c.user = ADUser.object(with: d["user"] as! [String: Any], replacedKeyNames: nil)
+//            }
+//            self.latestComments.append(contentsOf: moreComments)
+            
+            guard response != nil else { return }
+            let json = JSON(response!)
+            if let latestDatas = json["data"].arrayObject {
+                let lc = latestDatas.compactMap({ Comment.deserialize(from: $0 as? Dictionary)})
+                self.latestComments += lc
             }
-            self.latestComments.append(contentsOf: moreComments)
+            
             
             // 页码
             self.page = page
@@ -209,7 +234,7 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
             
             // 控制footer状态
 //            let total = dict["total"]! as! Int    // 错误
-            let total = "\(dict["total"]!)"
+            let total = "\(json["total"])"
 //            print(self.latestComments.count)
             if self.latestComments.count >= Int(total)! {
                 self.tableView.mj_footer.isHidden = true
@@ -253,20 +278,30 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: id) as! ADCommentCell
+//        let cell = tableView.dequeueReusableCell(withIdentifier: id) as! ADCommentCell
+        let cell = tableView.ad_dequeueReusableCell(indexPath: indexPath) as ADCommentCell
         cell.comment = self.getComment(in: indexPath)
         return cell
     }
     
     // 返回指定section里的comments
-    private func getComments(in section: Int) -> [ADComment] {
+//    private func getComments(in section: Int) -> [ADComment] {
+//        if section == 0 {
+//            return self.hotComments.count > 0 ? self.hotComments : self.latestComments
+//        }
+//        return self.latestComments
+//    }
+    private func getComments(in section: Int) -> [Comment] {
         if section == 0 {
             return self.hotComments.count > 0 ? self.hotComments : self.latestComments
         }
         return self.latestComments
     }
     
-    private func getComment(in indexPath: IndexPath) -> ADComment {
+//    private func getComment(in indexPath: IndexPath) -> ADComment {
+//        return self.getComments(in: indexPath.section)[indexPath.row]
+//    }
+    private func getComment(in indexPath: IndexPath) -> Comment {
         return self.getComments(in: indexPath.section)[indexPath.row]
     }
     
@@ -312,7 +347,7 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
         
         tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.middle, animated: true)
         self.textField.becomeFirstResponder()
-        self.textField.text = "@ \(cell.comment!.user!.username!): "
+        self.textField.text = "@ \(cell.comment.user.username): "
     }
     
     // MARK: - 长按, MenuItem相关响应
@@ -343,24 +378,26 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @objc private func ding(_ menuController: UIMenuController) {
-        print(#function + ", " + "\(self.getComment(in: self.tableView.indexPathForSelectedRow!).content!)")
+        print(#function + ", " + "\(self.getComment(in: self.tableView.indexPathForSelectedRow!).content)")
     }
     
     @objc private func reply(_ menuController: UIMenuController) {
-        print(#function + ", " + "\(self.getComment(in: self.tableView.indexPathForSelectedRow!).content!)")
+        print(#function + ", " + "\(self.getComment(in: self.tableView.indexPathForSelectedRow!).content)")
     }
     
     @objc private func report(_ menuController: UIMenuController) {
-        print(#function + ", " + "\(self.getComment(in: self.tableView.indexPathForSelectedRow!).content!)")
+        print(#function + ", " + "\(self.getComment(in: self.tableView.indexPathForSelectedRow!).content)")
     }
     
     // MARK: - 懒加载
     private lazy var networkManager = ADNetworkManager.shared()
     
     /** 最新评论: 不要以new开头命名变量，系统会认为是new方法 */
-    private lazy var latestComments = [ADComment]()
+//    private lazy var latestComments = [ADComment]()
+    private lazy var latestComments = [Comment]()
     /** 最热评论 */
-    private var hotComments = [ADComment]()
+//    private var hotComments = [ADComment]()
+    private var hotComments = [Comment]()
     
     /** 放置被评论的原帖 */
     private lazy var originalTopic: UIView = {
@@ -368,20 +405,26 @@ class ADCommentViewController: UIViewController, UITableViewDataSource, UITableV
         let header = UIView()
         
         // 清空top_cmt, 因为在当前控制器中, 被评论的原帖内不显示最热评论(最热评论显示在tableView开头)
-        if self.topic!.topComment != nil {
-            self.saved_top_cmt = self.topic!.topComment // 先把最热评论存起来再清空. deinit的时候要恢复
-            self.topic!.topComment = nil
-            self.topic!.setValue(0, forKey: "cellHeight")
+//        if self.topic!.topComment != nil {
+//            self.saved_top_cmt = self.topic!.topComment // 先把最热评论存起来再清空. deinit的时候要恢复
+//            self.topic!.topComment = nil
+//            self.topic!.setValue(0, forKey: "cellHeight")
+//        }
+        if self.topic.topCmt != nil {
+            self.saved_top_cmt = self.topic.topCmt! // 先把最热评论存起来再清空. deinit的时候要恢复
+            self.topic.topCmt = nil
+//            self.topic.setValue(0, forKey: "cellHeight")
+            self.topic.cellHeight = 0
         }
         
         //添加cell到这个header上面
         let cell = ADTopicCell.cell()
-        cell.topic = self.topic!
-        cell.frame = CGRect(origin: header.bounds.origin, size: CGSize(width: ADScreenW, height: self.topic!.topicHeight()))   // 此处重新计算了topicHeight, 因为上面清空了top_cmt并且归零了cellHeight
+        cell.topic = self.topic
+        cell.frame = CGRect(origin: header.bounds.origin, size: CGSize(width: ADScreenW, height: self.topic.topicHeight()))   // 此处重新计算了topicHeight, 因为上面清空了top_cmt并且归零了cellHeight
         header.addSubview(cell)
         
         //header高度
-        header.height = self.topic!.topicHeight() + ADTopicCellMargin
+        header.height = self.topic.topicHeight() + ADTopicCellMargin
 //        print("header.frame: \(header.frame), cell.frame: \(cell.frame)")
         return header
     }()
