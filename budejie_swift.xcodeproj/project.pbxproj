@@ -20,7 +20,6 @@
 		8A59916720550B8400F91243 /* ADAddTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59916620550B8400F91243 /* ADAddTagViewController.swift */; };
 		8A5991692055E48F00F91243 /* ADTagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5991682055E48F00F91243 /* ADTagButton.swift */; };
 		8A59916B2055EA8600F91243 /* ADTagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59916A2055EA8600F91243 /* ADTagTextField.swift */; };
-		8A59916D20578E0C00F91243 /* UIColor+NightExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59916C20578E0C00F91243 /* UIColor+NightExtension.swift */; };
 		8A5F81A42038442D00B0106D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F81A32038442D00B0106D /* AppDelegate.swift */; };
 		8A5F81AB2038442D00B0106D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A5F81AA2038442D00B0106D /* Assets.xcassets */; };
 		8A5F81AE2038442D00B0106D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A5F81AC2038442D00B0106D /* LaunchScreen.storyboard */; };
@@ -43,6 +42,11 @@
 		8A5F8295203846CD00B0106D /* ADPublishViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A5F8244203846CD00B0106D /* ADPublishViewController.xib */; };
 		8A5F8297203846CD00B0106D /* ADAddToolBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A5F8248203846CD00B0106D /* ADAddToolBar.xib */; };
 		8A5F829B203846CD00B0106D /* colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A5F824F203846CD00B0106D /* colors.plist */; };
+		8A63B9EF20B24C2B0037AA1B /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9EE20B24C2B0037AA1B /* Topic.swift */; };
+		8A63B9F120B258380037AA1B /* RecommendTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9F020B258380037AA1B /* RecommendTag.swift */; };
+		8A63B9F320B258780037AA1B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9F220B258780037AA1B /* Comment.swift */; };
+		8A63B9F520B258C60037AA1B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9F420B258C60037AA1B /* User.swift */; };
+		8A63B9F720B25A140037AA1B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9F620B25A140037AA1B /* Constant.swift */; };
 		8A766F1920437E0B006C592E /* ADTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F1820437E0B006C592E /* ADTabBarController.swift */; };
 		8A766F1B20438192006C592E /* ADEssenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F1A20438192006C592E /* ADEssenceViewController.swift */; };
 		8A766F1D204381B4006C592E /* ADFriendTrendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F1C204381B4006C592E /* ADFriendTrendsViewController.swift */; };
@@ -107,7 +111,6 @@
 		8A59916620550B8400F91243 /* ADAddTagViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADAddTagViewController.swift; sourceTree = "<group>"; };
 		8A5991682055E48F00F91243 /* ADTagButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADTagButton.swift; sourceTree = "<group>"; };
 		8A59916A2055EA8600F91243 /* ADTagTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADTagTextField.swift; sourceTree = "<group>"; };
-		8A59916C20578E0C00F91243 /* UIColor+NightExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+NightExtension.swift"; sourceTree = "<group>"; };
 		8A5F81A02038442D00B0106D /* budejie_swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = budejie_swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5F81A32038442D00B0106D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../AppDelegate.swift; sourceTree = "<group>"; };
 		8A5F81AA2038442D00B0106D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -132,6 +135,11 @@
 		8A5F8244203846CD00B0106D /* ADPublishViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADPublishViewController.xib; sourceTree = "<group>"; };
 		8A5F8248203846CD00B0106D /* ADAddToolBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADAddToolBar.xib; sourceTree = "<group>"; };
 		8A5F824F203846CD00B0106D /* colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = colors.plist; sourceTree = "<group>"; };
+		8A63B9EE20B24C2B0037AA1B /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
+		8A63B9F020B258380037AA1B /* RecommendTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendTag.swift; sourceTree = "<group>"; };
+		8A63B9F220B258780037AA1B /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		8A63B9F420B258C60037AA1B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8A63B9F620B25A140037AA1B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		8A766F1820437E0B006C592E /* ADTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADTabBarController.swift; sourceTree = "<group>"; };
 		8A766F1A20438192006C592E /* ADEssenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADEssenceViewController.swift; sourceTree = "<group>"; };
 		8A766F1C204381B4006C592E /* ADFriendTrendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADFriendTrendsViewController.swift; sourceTree = "<group>"; };
@@ -272,10 +280,14 @@
 		8A5F81C4203846CD00B0106D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8A766F4A204B60DA006C592E /* ADRecommendTag.swift */,
 				8A766F56204D104C006C592E /* ADTopic.swift */,
+				8A63B9EE20B24C2B0037AA1B /* Topic.swift */,
+				8A766F4A204B60DA006C592E /* ADRecommendTag.swift */,
+				8A63B9F020B258380037AA1B /* RecommendTag.swift */,
 				8A766F60204D33D1006C592E /* ADComment.swift */,
+				8A63B9F220B258780037AA1B /* Comment.swift */,
 				8A766F62204D347A006C592E /* ADUser.swift */,
+				8A63B9F420B258C60037AA1B /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -424,7 +436,7 @@
 				8A766F462048BDB8006C592E /* UIImageView+ADExtension.swift */,
 				8A766F64204E9697006C592E /* Date+ADExtension.swift */,
 				8A766F762051CCF7006C592E /* Notification+ADExtension.swift */,
-				8A59916C20578E0C00F91243 /* UIColor+NightExtension.swift */,
+				8A63B9F620B25A140037AA1B /* Constant.swift */,
 			);
 			name = Extension;
 			path = Category;
@@ -610,6 +622,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-budejie_swift/Pods-budejie_swift-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/DACircularProgress/DACircularProgress.framework",
+				"${BUILT_PRODUCTS_DIR}/HandyJSON/HandyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/M13ProgressSuite/M13ProgressSuite.framework",
 				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
@@ -619,12 +632,14 @@
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/pop/pop.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DACircularProgress.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HandyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13ProgressSuite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
@@ -634,6 +649,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/pop.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -649,6 +665,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A599161205393D900F91243 /* ADSettingViewController.swift in Sources */,
+				8A63B9EF20B24C2B0037AA1B /* Topic.swift in Sources */,
 				8A766F3920445DCC006C592E /* ADLoginRegisterViewController.swift in Sources */,
 				8A766F4120446778006C592E /* ADRecommendCategoryCell.swift in Sources */,
 				8A766F2320438A88006C592E /* ADNavigationController.swift in Sources */,
@@ -660,6 +677,7 @@
 				8A766F4F204BD4D9006C592E /* ADTextField.swift in Sources */,
 				8A766F33204434A3006C592E /* NSObject+ADKeyValue.swift in Sources */,
 				8A5991692055E48F00F91243 /* ADTagButton.swift in Sources */,
+				8A63B9F120B258380037AA1B /* RecommendTag.swift in Sources */,
 				8A5991652054A45600F91243 /* ADAddToolBar.swift in Sources */,
 				8A766F1920437E0B006C592E /* ADTabBarController.swift in Sources */,
 				8A766F53204BED34006C592E /* ADPushGuideView.swift in Sources */,
@@ -671,6 +689,7 @@
 				8A5991592053650D00F91243 /* ADWebViewController.swift in Sources */,
 				8A766F63204D347A006C592E /* ADUser.swift in Sources */,
 				8A0A19C62073153C0096C733 /* ADDetailViewController.swift in Sources */,
+				8A63B9F320B258780037AA1B /* Comment.swift in Sources */,
 				8A766F3520443DBA006C592E /* NSObject+Constants.swift in Sources */,
 				8A766F6B204FA084006C592E /* ADCommentViewController.swift in Sources */,
 				8A766F3D20446628006C592E /* ADRecommendUser.swift in Sources */,
@@ -686,6 +705,7 @@
 				8A766F61204D33D1006C592E /* ADComment.swift in Sources */,
 				8A59916B2055EA8600F91243 /* ADTagTextField.swift in Sources */,
 				8A766F5D204D2C6E006C592E /* ADTopicVoiceView.swift in Sources */,
+				8A63B9F520B258C60037AA1B /* User.swift in Sources */,
 				8A766F57204D104C006C592E /* ADTopic.swift in Sources */,
 				8A766F4B204B60DA006C592E /* ADRecommendTag.swift in Sources */,
 				8A766F55204CC51C006C592E /* ADTopicViewController.swift in Sources */,
@@ -695,6 +715,7 @@
 				8A766F51204BD4EC006C592E /* ADVerticalButton.swift in Sources */,
 				8A766F5F204D2CCB006C592E /* ADTopicVideoView.swift in Sources */,
 				8A5F81A42038442D00B0106D /* AppDelegate.swift in Sources */,
+				8A63B9F720B25A140037AA1B /* Constant.swift in Sources */,
 				8A766F6D204FB995006C592E /* ADShowPictureViewController.swift in Sources */,
 				8A599157205364A100F91243 /* ADSquare.swift in Sources */,
 				8A59915F2053908F00F91243 /* ADMeFooterView.swift in Sources */,
@@ -703,7 +724,6 @@
 				8A766F5B204D2C0A006C592E /* ADTopicPictureView.swift in Sources */,
 				8A766F772051CCF7006C592E /* Notification+ADExtension.swift in Sources */,
 				8A766F452048BC3A006C592E /* UIImage+ADExtension.swift in Sources */,
-				8A59916D20578E0C00F91243 /* UIColor+NightExtension.swift in Sources */,
 				8A766F69204F42E1006C592E /* ADCommentCell.swift in Sources */,
 				8A766F6F2050FE21006C592E /* ADPostWordViewController.swift in Sources */,
 				8A766F43204467B1006C592E /* ADRecommendUserCell.swift in Sources */,

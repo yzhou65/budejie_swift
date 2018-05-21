@@ -3,6 +3,8 @@ use_frameworks!
 
 target 'budejie_swift’ do
     pod "AFNetworking"
+    pod 'HandyJSON'
+    pod 'SwiftyJSON'
     pod "SDWebImage"
     pod "SVProgressHUD"
     pod "MJExtension"
