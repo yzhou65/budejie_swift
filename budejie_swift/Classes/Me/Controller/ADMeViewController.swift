@@ -8,11 +8,12 @@
 
 import UIKit
 import SVProgressHUD
+import SwiftyJSON
 
 private let id = "me"
 
 class ADMeViewController: UITableViewController {
-    
+    var squares = [Square]()
     // MARK: - 基础设置
 
     override func viewDidLoad() {
@@ -42,6 +43,8 @@ class ADMeViewController: UITableViewController {
         
         //注册cell
         self.tableView.register(ADMeCell.self, forCellReuseIdentifier: id)
+//        self.tableView.ad_registerCell(with: ADMeCell.self)
+        
         
         //调整header和footer
 //        self.tableView.sectionHeaderHeight = 0
@@ -61,15 +64,27 @@ class ADMeViewController: UITableViewController {
         SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.black)
         SVProgressHUD.show()
         
-        //发送请求
         self.networkManager.get(budejie_url, parameters: params, progress: nil, success: { (_, response) in
+            
             SVProgressHUD.dismiss()
+            guard response != nil else {
+                SVProgressHUD.show(withStatus: "暂无数据")
+                return
+            }
+            let json = JSON(response!)
+            if let datas = json["square_list"].arrayObject {
+                let squares = datas.compactMap({ Square.deserialize(from: $0 as? Dictionary) })
+//                self.tableView.tableFooterView = ADMeFooterView(squares: squares)
+                
+                let footerView = ADMeFooterCollectionView(frame: CGRect.zero, collectionViewLayout: ADMeCollectionLayout())
+                footerView.squares = squares
+                self.tableView.tableFooterView = footerView
+            }
             
-            let dict = response as! [String: Any]
-            let squares = ADSquare.objectsWithDictionaries(dictArr: dict["square_list"] as! [[String : Any]], replacedKeyNames: nil) as! [ADSquare]
-            self.tableView.tableFooterView = ADMeFooterView(squares: squares)
-            
-        }, failure: nil)
+        }) { (_, error) in
+            print(error)
+            SVProgressHUD.showError(withStatus: "网络加载错误")
+        }
     }
     
     // MARK: - 按钮监听
@@ -93,6 +108,7 @@ class ADMeViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: id) as! ADMeCell
+//        let cell = tableView.ad_dequeueReusableCell(indexPath: indexPath) as ADMeCell
 
         if indexPath.section == 0 {
             cell.imageView?.image = UIImage(named: "mine_icon_nearby")
@@ -111,6 +127,9 @@ class ADMeViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView(frame: CGRect.zero)
     }
+    
+    // MARK: - UICollectionView data source
+
     
     // MARK: - 懒加载
     private lazy var networkManager = ADNetworkManager.shared()

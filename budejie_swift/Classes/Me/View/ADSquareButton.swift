@@ -9,13 +9,13 @@
 import UIKit
 
 class ADSquareButton: UIButton {
-
-    var square: ADSquare? {
+    
+    var square = Square() {
         didSet {
-            self.setTitle(square!.name!, for: UIControlState.normal)
+            self.setTitle(square.name, for: UIControlState.normal)
             
             // 利用SDWebImage给按钮设置image
-            self.sd_setImage(with: URL(string: square!.icon!), for: UIControlState.normal)
+            self.sd_setImage(with: URL(string: square.icon), for: UIControlState.normal)
         }
     }
     

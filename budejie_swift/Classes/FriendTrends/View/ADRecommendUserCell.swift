@@ -9,33 +9,44 @@
 import UIKit
 import SDWebImage
 
-class ADRecommendUserCell: UITableViewCell {
+class ADRecommendUserCell: UITableViewCell, RegisterCellNib {
     @IBOutlet weak var fansCountLabel: UILabel!
     @IBOutlet weak var headImageView: UIImageView!
     @IBOutlet weak var screenNameLabel: UILabel!
     
     
-    var user: ADRecommendUser? {
+//    var user: ADRecommendUser? {
+//        didSet {
+//            self.screenNameLabel.text = user!.screen_name!
+//
+//            var fansCount: String?
+//            if (user!.fans_count!.intValue < 10000) {
+//                fansCount = "\(user!.fans_count!)人关注"
+//            }
+//            else {
+//                fansCount = String(format: "%.1f万人关注", user!.fans_count!.floatValue / 10000.0)
+////                fansCount = "\(user!.fans_count!.intValue / 10000)万人关注"
+//            }
+//            self.fansCountLabel.text = fansCount;
+//            self.headImageView.setProfileImage(with: user!.header!)
+//        }
+//    }
+    
+    var user = RecommendUser() {
         didSet {
-            self.screenNameLabel.text = user!.screen_name!
+            self.screenNameLabel.text = user.screen_name
             
             var fansCount: String?
-            if (user!.fans_count!.intValue < 10000) {
-                fansCount = "\(user!.fans_count!)人关注"
+            if (user.fans_count < 10000) {
+                fansCount = "\(user.fans_count)人关注"
             }
             else {
-                fansCount = String(format: "%.1f万人关注", user!.fans_count!.floatValue / 10000.0)
-//                fansCount = "\(user!.fans_count!.intValue / 10000)万人关注"
+                fansCount = String(format: "%.1f万人关注", Float(user.fans_count) / 10000.0)
+                //                fansCount = "\(user!.fans_count!.intValue / 10000)万人关注"
             }
             self.fansCountLabel.text = fansCount;
-            self.headImageView.setProfileImage(with: user!.header!)
+            self.headImageView.setProfileImage(with: user.header)
         }
-    }
-    
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
     }
 
 }

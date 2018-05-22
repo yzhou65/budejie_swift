@@ -8,6 +8,7 @@
 
 import UIKit
 import NJKWebViewProgress
+import SafariServices
 
 class ADWebViewController: UIViewController, UIWebViewDelegate {
     // MARK: - 子控件, 成员变量
@@ -17,7 +18,7 @@ class ADWebViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var forwardItem: UIBarButtonItem!
     
     /** 待加载的url */
-    var url: String?
+    var url: String = ""
     
     /** 进度代理对象 */
     var progress: NJKWebViewProgress?
@@ -39,7 +40,7 @@ class ADWebViewController: UIViewController, UIWebViewDelegate {
             self?.progressView.isHidden = (self?.progressView.progress == 1.0)
         }
         
-        self.webView.loadRequest(URLRequest(url: URL(string: self.url!)!))
+        self.webView.loadRequest(URLRequest(url: URL(string: self.url)!))
     }
     
     // MARK: - 按钮监听

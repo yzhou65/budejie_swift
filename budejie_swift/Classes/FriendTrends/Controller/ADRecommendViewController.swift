@@ -9,10 +9,11 @@
 import UIKit
 import SVProgressHUD
 import MJRefresh
+import SwiftyJSON
 
 private let url = "https://api.budejie.com/api/api_open.php"
-private let categoryId = "category"
-private let userId = "user"
+private let categoryId = "ADRecommendCategoryCell"
+private let userId = "ADRecommendUserCell"
 
 class ADRecommendViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -21,6 +22,10 @@ class ADRecommendViewController: UIViewController, UITableViewDataSource, UITabl
     
     // 正在请求的数据字典
     private var params: NSMutableDictionary?
+    
+    private var categories = [RecommendCategory]()
+    private var users = [RecommendUser]()
+//    private var c_users = [[RecommendUser]]()
     
 
     // MARK: - 初始化设置
@@ -41,13 +46,21 @@ class ADRecommendViewController: UIViewController, UITableViewDataSource, UITabl
         //使用了xib来定制cell，所以要对相应的tableView进行cell的注册
         //现在有2个tableView公用一个控制器
         
-        self.categoryTableView.register(UINib(nibName: String(describing: ADRecommendCategoryCell.self), bundle: nil), forCellReuseIdentifier: categoryId)
-        self.userTableView.register(UINib(nibName: String(describing: ADRecommendUserCell.self), bundle: nil), forCellReuseIdentifier: userId)
+//        self.categoryTableView.register(UINib(nibName: String(describing: ADRecommendCategoryCell.self), bundle: nil), forCellReuseIdentifier: categoryId)
+//        self.userTableView.register(UINib(nibName: String(describing: ADRecommendUserCell.self), bundle: nil), forCellReuseIdentifier: userId)
+        
+        self.categoryTableView.ad_registerCell(with: ADRecommendCategoryCell.self)
+        self.userTableView.ad_registerCell(with: ADRecommendUserCell.self)
         
         //设置inset
-        self.automaticallyAdjustsScrollViewInsets = false
-        self.categoryTableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
-        self.userTableView.contentInset = self.categoryTableView.contentInset;
+        self.automaticallyAdjustsScrollViewInsets = true
+//        self.categoryTableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+//        self.userTableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0);
+        
+//        print(self.categoryTableView.frame)
+//        print(self.userTableView.frame)
+        
+        self.userTableView.contentInset = self.categoryTableView.contentInset
         self.userTableView.rowHeight = 70;  // row的高度默认为44
         
         //标题
@@ -61,6 +74,7 @@ class ADRecommendViewController: UIViewController, UITableViewDataSource, UITabl
     private func configRefresh() {
         self.userTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadNewUsers))
         self.userTableView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMoreUsers))
+        self.userTableView.mj_footer.isHidden = true
     }
     
     // MARK: - 加载Categories 和 Users
@@ -70,13 +84,25 @@ class ADRecommendViewController: UIViewController, UITableViewDataSource, UITabl
         SVProgressHUD.show()
         
         let params = ["a": "category", "c": "subscribe"]
-        self.networkManager.get("", parameters: params, progress: nil, success: { (task: URLSessionDataTask, response) in
+        self.networkManager.get(budejie_url, parameters: params, progress: nil, success: { (task: URLSessionDataTask, response) in
             // 隐藏指示器
             SVProgressHUD.dismiss()
             
-            let dict = (response as! [String: Any])["list"] as! [[String: Any]]
-            self.categories = ADRecommendCategory.objectsWithDictionaries(dictArr: dict) as! [ADRecommendCategory]
-            self.categories = ADRecommendCategory.objectsWithDictionaries(dictArr: dict, replacedKeyNames: nil) as! [ADRecommendCategory]
+//            let dict = (response as! [String: Any])["list"] as! [[String: Any]]
+//            self.categories = ADRecommendCategory.objectsWithDictionaries(dictArr: dict, replacedKeyNames: nil) as! [ADRecommendCategory]
+            
+            guard response != nil else {
+                SVProgressHUD.show(withStatus: "暂无数据")
+                return
+            }
+            
+            let json = JSON(response!)
+            if let datas = json["list"].arrayObject {
+                let categories = datas.compactMap({ RecommendCategory.deserialize(from: $0 as? Dictionary) })
+                self.categories = categories
+            } else {
+                return
+            }
             
             // 刷新列表
             self.categoryTableView.reloadData()
@@ -103,17 +129,23 @@ class ADRecommendViewController: UIViewController, UITableViewDataSource, UITabl
      */
     @objc private func loadNewUsers() {
         // 当前选定的category
-        let sc = self.selectedCategory()
+//        var sc = self.selectedCategory()
+        let indexPath = self.categoryTableView.indexPathForSelectedRow!
+//        var sc = self.categories[indexPath.row]
         
         //设置当前页码为1
-        sc.currentPage = 1
+        self.categories[indexPath.row].currentPage = 1
+//        sc.currentPage = 1
 
         //发送请求给服务器，加载右侧的数据. params得用NSMutableDictionary,否则仅仅是[hashable: Any]无法判断self.params = params
         let params = NSMutableDictionary()
         params["a"] = "list"
         params["c"] = "subscribe"
-        params["category_id"] = sc.id!
-        params["page"] = sc.currentPage
+//        params["category_id"] = sc.id
+//        params["page"] = sc.currentPage
+        
+        params["category_id"] = self.categories[indexPath.row].id
+        params["page"] = self.categories[indexPath.row].currentPage
         self.params = params
         
         
@@ -121,23 +153,35 @@ class ADRecommendViewController: UIViewController, UITableViewDataSource, UITabl
         self.networkManager.get(url, parameters: params, progress: nil, success: { (_, response) in
             
             //字典数组转为模型数组
-            let dict = response as! [String: Any]
-//            let users = ADRecommendUser.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]]) as! [ADRecommendUser]
-            let users = ADRecommendUser.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]], replacedKeyNames: nil) as! [ADRecommendUser]
+//            let dict = response as! [String: Any]
+//            let users = ADRecommendUser.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]], replacedKeyNames: nil) as! [ADRecommendUser]
             
             //清除以前的所有旧数据. 否则每次下拉刷新就会重复添加数据到users里
-            sc.users.removeAll()
+//            sc.users.removeAll()
+            self.categories[indexPath.row].users.removeAll()
             
-            //添加到当前类别对应的用户数组中
-            sc.users.append(contentsOf: users)
+            // 字典数组 -> structs
+            guard response != nil else {
+                SVProgressHUD.show(withStatus: "暂无数据")
+                return
+            }
+            
+            let json = JSON(response!)
+            if let datas = json["list"].arrayObject {
+                let newUsers = datas.compactMap({ RecommendUser.deserialize(from: $0 as? Dictionary) })
+                //添加到当前类别对应的用户数组中
+                self.categories[indexPath.row].users = newUsers
+            } else {
+                return
+            }
             
             //保存总数
-            sc.total = dict["total"]! as! Int
+            self.categories[indexPath.row].total = json["total"].int!
             
             //如果上一次请求和当前请求不一样(即不是最后一次请求)，就要停止上一次的请求(上一次请求已经不需要了), 只执行当前请求
             // 返回的数据还是可以append, 但是刷新表格的耗时操作就不应该继续
             if self.params != params { return }
-            
+            let categories = self.categories
             // 刷新右边表格
             self.userTableView.reloadData()
             
@@ -162,30 +206,49 @@ class ADRecommendViewController: UIViewController, UITableViewDataSource, UITabl
     
     @objc private func loadMoreUsers() {
         // 当前选定的category
-        let sc = self.selectedCategory()
+        let indexPath = self.categoryTableView.indexPathForSelectedRow!
+//        var sc = self.categories[indexPath.row]
         
         //发送请求给服务器，加载右侧的数据. params得用NSMutableDictionary,否则仅仅是[hashable: Any]无法判断self.params = params
         let params = NSMutableDictionary()
         params["a"] = "list"
         params["c"] = "subscribe"
-        params["category_id"] = sc.id!
-        sc.currentPage += 1
-        params["page"] = sc.currentPage
+//        params["category_id"] = sc.id
+//        sc.currentPage += 1
+//        params["page"] = sc.currentPage
+        
+        params["category_id"] = self.categories[indexPath.row].id
+        self.categories[indexPath.row].currentPage += 1
+        params["page"] = self.categories[indexPath.row].currentPage
         
         
         //发送请求给服务器，加载更多右侧的数据
         self.networkManager.get(url, parameters: params, progress: nil, success: { (_, response) in
             
             //字典数组转为模型数组
-            let dict = response as! [String: Any]
-//            let users = ADRecommendUser.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]]) as! [ADRecommendUser]
-            let users = ADRecommendUser.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]], replacedKeyNames: nil) as! [ADRecommendUser]
+//            let dict = response as! [String: Any]
+//            let users = ADRecommendUser.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]], replacedKeyNames: nil) as! [ADRecommendUser]
+            
+            // 字典数组转为structs
+            guard response != nil else {
+                SVProgressHUD.show(withStatus: "暂无数据")
+                return
+            }
+            let json = JSON(response!)
+            if let datas = json["list"].arrayObject {
+                let moreUsers = datas.compactMap({ RecommendUser.deserialize(from: $0 as? Dictionary) })
+//                self.c_users[indexPath.row] += moreUsers
+//                sc.users += moreUsers
+                self.categories[indexPath.row].users += moreUsers
+                
+//                let categories = self.categories
+                // 刷新右边表格
+                self.userTableView.reloadData()
+            }
             
             // 直接append到当前类别对应的用户数组中
-            sc.users.append(contentsOf: users)
-            
-            // 刷新右边表格
-            self.userTableView.reloadData()
+//            sc.users.append(contentsOf: users)
+//            sc.users += users
             
             //让底部控件结束刷新
             self.checkFooterState()
@@ -202,7 +265,8 @@ class ADRecommendViewController: UIViewController, UITableViewDataSource, UITabl
     
     private func checkFooterState() {
         // 当前选定的category
-        let sc = self.selectedCategory()
+        let indexPath = self.categoryTableView.indexPathForSelectedRow!
+        let sc = self.categories[indexPath.row]
         
         //每次刷新右边数据时，都控制footer显示或隐藏
         self.userTableView.mj_footer.isHidden = (sc.users.count == 0)
@@ -228,18 +292,33 @@ class ADRecommendViewController: UIViewController, UITableViewDataSource, UITabl
         guard let indexPath = self.categoryTableView.indexPathForSelectedRow else {
             return 0
         }
-        return self.categories[indexPath.row].users.count
+        
+        self.checkFooterState()
+//        print(self.userTableView.frame)
+        
+        let count = self.categories[indexPath.row].users.count
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == self.categoryTableView {    // 左边category的表
-            let cell = tableView.dequeueReusableCell(withIdentifier: categoryId) as! ADRecommendCategoryCell
+//            let cell = tableView.dequeueReusableCell(withIdentifier: categoryId) as! ADRecommendCategoryCell
+            let cell = tableView.ad_dequeueReusableCell(indexPath: indexPath) as ADRecommendCategoryCell
             cell.category = self.categories[indexPath.row]
             return cell
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: userId) as! ADRecommendUserCell
-        cell.user = self.selectedCategory().users[indexPath.row]
+//        let cell = tableView.dequeueReusableCell(withIdentifier: userId) as! ADRecommendUserCell
+        let cell = tableView.ad_dequeueReusableCell(indexPath: indexPath) as ADRecommendUserCell
+//        var category = self.selectedCategory()
+        
+        let selectedIndexPath = self.categoryTableView.indexPathForSelectedRow!
+//        var c = self.categories[indexPath.row]
+//        c.users = self.c_users[indexPath.row]
+//        cell.user = c_users[selectedIndexPath.row][indexPath.row]
+//        cell.user = self.selectedCategory().users[indexPath.row]
+
+        cell.user = self.categories[selectedIndexPath.row].users[indexPath.row]
         return cell
     }
     
@@ -267,15 +346,19 @@ class ADRecommendViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     // MARK: - 返回选定的category
-    private func selectedCategory() -> ADRecommendCategory {
-        let indexPath = self.categoryTableView.indexPathForSelectedRow
-        return self.categories[indexPath!.row]
-    }
+//    private func selectedCategory() -> ADRecommendCategory {
+//    private func selectedCategory() -> RecommendCategory {
+//        let indexPath = self.categoryTableView.indexPathForSelectedRow
+//        return self.categories[indexPath!.row]
+//    }
     
     // MARK: - 懒加载
     private lazy var networkManager = ADNetworkManager.shared()
-    private lazy var categories = [ADRecommendCategory]()
-    private lazy var users = [ADRecommendUser]()
+//    private lazy var categories = [ADRecommendCategory]()
+//    private lazy var users = [ADRecommendUser]()
+    
+//    private lazy var categories = [RecommendCategory]()
+//    private lazy var users = [RecommendUser]()
     
     
     // MARK: - 控制器销毁

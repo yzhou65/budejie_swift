@@ -7,15 +7,23 @@
 //
 
 import UIKit
+import SafariServices
 
 private let maxCols: Int = 5    // 一行最多4列方格
 private let margin: CGFloat = 5
 
-class ADMeFooterView: UIView {
+class ADMeFooterView: UIView, SFSafariViewControllerDelegate {
     
     var footerHeight: CGFloat = 0
     
-    init(squares: [ADSquare]) {
+//    init(squares: [ADSquare]) {
+//        super.init(frame: CGRect.zero)
+//        
+//        self.backgroundColor = UIColor.clear
+//        self.createSquareButtons(with: squares)
+//    }
+    
+    init(squares: [Square]) {
         super.init(frame: CGRect.zero)
         
         self.backgroundColor = UIColor.clear
@@ -27,7 +35,9 @@ class ADMeFooterView: UIView {
     }
     
     
-    private func createSquareButtons(with squares: [ADSquare]) {
+//    private func createSquareButtons(with squares: [ADSquare]) {
+    
+    private func createSquareButtons(with squares: [Square]) {
         //宽高
         let buttonW: CGFloat = (ADScreenW - margin * CGFloat(maxCols - 1)) / CGFloat(maxCols)
         let buttonH: CGFloat = buttonW
@@ -55,20 +65,30 @@ class ADMeFooterView: UIView {
 //        print("rows: \(rows), height: \(self.height)")
     }
     
-    
     @objc private func buttonTapped(_ btn: ADSquareButton) {
-        if !btn.square!.url!.hasPrefix("http") {
+        if !btn.square.url.hasPrefix("http") {
             return
         }
         
         let webVC = ADWebViewController()
-        webVC.url = btn.square?.url
-        webVC.title = btn.square?.name
+        webVC.url = btn.square.url
+        webVC.title = btn.square.name
+        
+//        let safariVC = SFSafariViewController(url: URL(string: btn.square.url)!)
+//        safariVC.delegate = self
         
         // 取出当前导航控制器
         let tabBarVC = UIApplication.shared.keyWindow!.rootViewController as! UITabBarController
         let nav = tabBarVC.selectedViewController as! UINavigationController
         nav.pushViewController(webVC, animated: true)
+//        nav.pushViewController(safariVC, animated: true)
+    }
+    
+    // MARK: - SafariDelegate
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        let tabBarVC = UIApplication.shared.keyWindow!.rootViewController as! UITabBarController
+        let nav = tabBarVC.selectedViewController as! UINavigationController
+        nav.popViewController(animated: true)
     }
     
     // MARK: - 懒加载

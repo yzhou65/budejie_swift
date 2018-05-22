@@ -47,6 +47,14 @@ class ADShowPictureViewController: UIViewController {
             self?.dismiss(animated: true, completion: nil)
             
         }).disposed(by: disposeBag)
+        
+//        self.saveButton.rx.controlEvent(UIControlEvents.touchUpInside).subscribe(onNext: { [weak self] in
+//            guard let im = self?.imageView.image else {
+//                SVProgressHUD.showError(withStatus: "图片未下载完")
+//                return
+//            }
+//            UIImageWriteToSavedPhotosAlbum(im, self, #selector(self?.image(_:didFinishSavingWithError:contextInfo:)), nil)
+//        }).disposed(by: disposeBag)
     }
     
     // MARK: - 按钮监听
@@ -54,27 +62,19 @@ class ADShowPictureViewController: UIViewController {
 //        self.dismiss(animated: true, completion: nil)
 //    }
 
-    @IBAction func save(_ sender: UIButton) {
-        guard let im = self.imageView.image else {
-            SVProgressHUD.showError(withStatus: "图片未下载完")
-            return
-        }
-        UIImageWriteToSavedPhotosAlbum(im, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-//        if self.imageView.image == nil {
+//    @IBAction func save(_ sender: UIButton) {
+//        guard let im = self.imageView.image else {
 //            SVProgressHUD.showError(withStatus: "图片未下载完")
 //            return
 //        }
-//
-//        UIImageWriteToSavedPhotosAlbum(self.imageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
-    }
-    
-    @objc private func savePhoto() {
-        guard let im = self.imageView.image else {
-            SVProgressHUD.showError(withStatus: "图片未下载完")
-            return
-        }
-        UIImageWriteToSavedPhotosAlbum(im, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-    }
+//        UIImageWriteToSavedPhotosAlbum(im, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+////        if self.imageView.image == nil {
+////            SVProgressHUD.showError(withStatus: "图片未下载完")
+////            return
+////        }
+////
+////        UIImageWriteToSavedPhotosAlbum(self.imageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+//    }
     
     
     // 保存图片相关

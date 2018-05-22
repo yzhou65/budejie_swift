@@ -1,21 +1,21 @@
 //
-//  ADRecommendCategory.swift
+//  RecommendCategory.swift
 //  budejie_swift
 //
-//  Created by Yue Zhou on 2/26/18.
+//  Created by Yue Zhou on 5/21/18.
 //  Copyright © 2018 Yue Zhou. All rights reserved.
 //
 
 import UIKit
+import HandyJSON
 
-class ADRecommendCategory: NSObject {
-    
+struct RecommendCategory: HandyJSON {
     // id
-    var id: NSNumber?
+    var id: Int = 0
     
-    var count: NSNumber?
+    var count: Int = 0
     
-    var name: String?
+    var name: String = ""
     
     
     /** 当前页 */
@@ -26,5 +26,5 @@ class ADRecommendCategory: NSObject {
     
     //MARK: 懒加载
     /** 这个类别对应的用户数据  */
-    lazy var users = [ADRecommendUser]()
+    var users = [RecommendUser]()
 }

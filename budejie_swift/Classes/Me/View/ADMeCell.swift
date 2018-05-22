@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ADMeCell: UITableViewCell {
+class ADMeCell: UITableViewCell, RegisterCellNib {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

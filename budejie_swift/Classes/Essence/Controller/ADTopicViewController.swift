@@ -47,6 +47,9 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
     /** 上次选中的控制器索引 */
     private var lastSelectedIndex = 0
     
+    /// 行高的缓存，用字典做容器。key：id，value：对应微博的行高
+//    var cellHeightCache: [String: CGFloat] = [String: CGFloat]()
+    
     // MARK: - 初始化设置
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,16 +134,12 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
             guard response != nil else { return }
             let json = JSON(response!)
             
-            print(json)
+//            print(json)
             let info = json["info"].dictionary
             let maxtime = info!["maxtime"]?.string
             self.maxtime = maxtime
             
-            //字典 -> 模型
-//            let topics = ADTopic.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]], replacedKeyNames: ADTopic.replacedKeyFromPropertyName) as! [ADTopic]
-//            self.topics = topics
-            
-            
+            //字典 -> struct
             if let datas = json["list"].arrayObject {
                 var topics = [Topic]()
                 topics = datas.compactMap({ Topic.deserialize(from: $0 as? Dictionary)})
@@ -191,15 +190,7 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
             // 存储maxtime
             guard response != nil else { return }
             let json = JSON(response!)
-//            print(json)
-            
-//            let dict = response as! [String: Any]
-//            self.maxtime = (dict["info"] as! [String: Any])["maxtime"] as! String?
             self.maxtime = (json["info"].dictionary)!["maxtime"]?.string
-            
-//            let moreTopics = ADTopic.objectsWithDictionaries(dictArr: dict["list"] as! [[String: Any]], replacedKeyNames: ADTopic.replacedKeyFromPropertyName) as! [ADTopic]
-//            self.topics.append(contentsOf: moreTopics)
-            
             
             if let datas = json["list"].arrayObject {
                 let moreTopics = datas.compactMap({ Topic.deserialize(from: $0 as? Dictionary)})
@@ -237,9 +228,9 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
 //        let cell = tableView.dequeueReusableCell(withIdentifier: id) as! ADTopicCell
         let cell = tableView.ad_dequeueReusableCell(indexPath: indexPath) as ADTopicCell
         var topic = self.topics[indexPath.row]
-        let _ = topic.topicHeight()
+//        let _ = self.topics[indexPath.row].topicHeight()
         
-        cell.topic = topic
+        cell.topic = self.topics[indexPath.row]
         return cell
     }
     
@@ -249,7 +240,12 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
      此方法会在cellForRowAtIndexPath之前调用。cellHeight在此处计算完后，再去上面的cellForRowAtIndexPath方法传入模型
      */
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return self.topics[indexPath.row].cellHeight
+//        if let height = self.cellHeightCache[self.topics[indexPath.row].id] {
+//            return height
+//        }
+//        let cellHeight = self.topics[indexPath.row].topicHeight()
+//        self.cellHeightCache[self.topics[indexPath.row].id] = cellHeight
+//        return cellHeight
         return self.topics[indexPath.row].topicHeight()
     }
     
@@ -257,7 +253,7 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
         let commentVC = ADCommentViewController()
         let topic = self.topics[indexPath.row]
 //        print("\(topic.top_cmt)  \(topic.topComment)")
-        commentVC.topic = topic
+        commentVC.topic = self.topics[indexPath.row]
         self.navigationController?.pushViewController(commentVC, animated: true)
     }
     
@@ -299,4 +295,7 @@ class ADTopicViewController: UITableViewController, UIViewControllerPreviewingDe
     private lazy var topics: [Topic] = [Topic]()
     private lazy var networkManager = ADNetworkManager.shared()
     
+//    override func didReceiveMemoryWarning() {
+//        self.cellHeightCache.removeAll()
+//    }
 }

@@ -8,12 +8,18 @@
 
 import UIKit
 
-class ADRecommendCategoryCell: UITableViewCell {
+class ADRecommendCategoryCell: UITableViewCell, RegisterCellNib {
     @IBOutlet weak var redIndicator: UIView!
     
-    var category: ADRecommendCategory? {
+//    var category: ADRecommendCategory? {
+//        didSet {
+//            self.textLabel?.text = category!.name!
+//        }
+//    }
+    
+    var category = RecommendCategory() {
         didSet {
-            self.textLabel?.text = category!.name!
+            self.textLabel?.text = category.name
         }
     }
     
