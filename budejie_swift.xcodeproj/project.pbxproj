@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8A0A19C62073153C0096C733 /* ADDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0A19C42073153C0096C733 /* ADDetailViewController.swift */; };
 		8A0A19C72073153C0096C733 /* ADDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A0A19C52073153C0096C733 /* ADDetailViewController.xib */; };
-		8A599157205364A100F91243 /* ADSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A599156205364A100F91243 /* ADSquare.swift */; };
 		8A5991592053650D00F91243 /* ADWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5991582053650D00F91243 /* ADWebViewController.swift */; };
 		8A59915B20538BBB00F91243 /* ADMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59915A20538BBB00F91243 /* ADMeViewController.swift */; };
 		8A59915D20538FE700F91243 /* ADMeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59915C20538FE700F91243 /* ADMeCell.swift */; };
@@ -47,6 +46,11 @@
 		8A63B9F320B258780037AA1B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9F220B258780037AA1B /* Comment.swift */; };
 		8A63B9F520B258C60037AA1B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9F420B258C60037AA1B /* User.swift */; };
 		8A63B9F720B25A140037AA1B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9F620B25A140037AA1B /* Constant.swift */; };
+		8A63B9F920B280210037AA1B /* UIKit+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9F820B280210037AA1B /* UIKit+Extension.swift */; };
+		8A63B9FB20B29C870037AA1B /* RecommendUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9FA20B29C870037AA1B /* RecommendUser.swift */; };
+		8A63B9FD20B29CB70037AA1B /* RecommendCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9FC20B29CB70037AA1B /* RecommendCategory.swift */; };
+		8A63B9FF20B3BACC0037AA1B /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63B9FE20B3BACC0037AA1B /* Square.swift */; };
+		8A63BA0120B3C6210037AA1B /* ADMeFooterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A63BA0020B3C6210037AA1B /* ADMeFooterCollectionView.swift */; };
 		8A766F1920437E0B006C592E /* ADTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F1820437E0B006C592E /* ADTabBarController.swift */; };
 		8A766F1B20438192006C592E /* ADEssenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F1A20438192006C592E /* ADEssenceViewController.swift */; };
 		8A766F1D204381B4006C592E /* ADFriendTrendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F1C204381B4006C592E /* ADFriendTrendsViewController.swift */; };
@@ -57,30 +61,23 @@
 		8A766F2B20442900006C592E /* ADPublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F2A20442900006C592E /* ADPublishViewController.swift */; };
 		8A766F2D20442F3D006C592E /* UIBarButtonItem+ADExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F2C20442F3D006C592E /* UIBarButtonItem+ADExtension.swift */; };
 		8A766F33204434A3006C592E /* NSObject+ADKeyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F32204434A3006C592E /* NSObject+ADKeyValue.swift */; };
-		8A766F3520443DBA006C592E /* NSObject+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F3420443DBA006C592E /* NSObject+Constants.swift */; };
 		8A766F3720445D1C006C592E /* ADRecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F3620445D1C006C592E /* ADRecommendViewController.swift */; };
 		8A766F3920445DCC006C592E /* ADLoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F3820445DCC006C592E /* ADLoginRegisterViewController.swift */; };
 		8A766F3B204460F3006C592E /* ADNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F3A204460F3006C592E /* ADNetworkManager.swift */; };
-		8A766F3D20446628006C592E /* ADRecommendUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F3C20446628006C592E /* ADRecommendUser.swift */; };
-		8A766F3F20446648006C592E /* ADRecommendCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F3E20446648006C592E /* ADRecommendCategory.swift */; };
 		8A766F4120446778006C592E /* ADRecommendCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F4020446778006C592E /* ADRecommendCategoryCell.swift */; };
 		8A766F43204467B1006C592E /* ADRecommendUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F42204467B1006C592E /* ADRecommendUserCell.swift */; };
 		8A766F452048BC3A006C592E /* UIImage+ADExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F442048BC3A006C592E /* UIImage+ADExtension.swift */; };
 		8A766F472048BDB8006C592E /* UIImageView+ADExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F462048BDB8006C592E /* UIImageView+ADExtension.swift */; };
 		8A766F49204B60BA006C592E /* ADRecommendTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F48204B60BA006C592E /* ADRecommendTagsViewController.swift */; };
-		8A766F4B204B60DA006C592E /* ADRecommendTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F4A204B60DA006C592E /* ADRecommendTag.swift */; };
 		8A766F4D204B6760006C592E /* ADRecommendTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F4C204B6760006C592E /* ADRecommendTagCell.swift */; };
 		8A766F4F204BD4D9006C592E /* ADTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F4E204BD4D9006C592E /* ADTextField.swift */; };
 		8A766F51204BD4EC006C592E /* ADVerticalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F50204BD4EC006C592E /* ADVerticalButton.swift */; };
 		8A766F53204BED34006C592E /* ADPushGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F52204BED34006C592E /* ADPushGuideView.swift */; };
 		8A766F55204CC51C006C592E /* ADTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F54204CC51C006C592E /* ADTopicViewController.swift */; };
-		8A766F57204D104C006C592E /* ADTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F56204D104C006C592E /* ADTopic.swift */; };
 		8A766F59204D17FF006C592E /* ADTopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F58204D17FF006C592E /* ADTopicCell.swift */; };
 		8A766F5B204D2C0A006C592E /* ADTopicPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F5A204D2C0A006C592E /* ADTopicPictureView.swift */; };
 		8A766F5D204D2C6E006C592E /* ADTopicVoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F5C204D2C6E006C592E /* ADTopicVoiceView.swift */; };
 		8A766F5F204D2CCB006C592E /* ADTopicVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F5E204D2CCB006C592E /* ADTopicVideoView.swift */; };
-		8A766F61204D33D1006C592E /* ADComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F60204D33D1006C592E /* ADComment.swift */; };
-		8A766F63204D347A006C592E /* ADUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F62204D347A006C592E /* ADUser.swift */; };
 		8A766F65204E9697006C592E /* Date+ADExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F64204E9697006C592E /* Date+ADExtension.swift */; };
 		8A766F67204F4068006C592E /* ADProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F66204F4067006C592E /* ADProgressView.swift */; };
 		8A766F69204F42E1006C592E /* ADCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A766F68204F42E1006C592E /* ADCommentCell.swift */; };
@@ -100,7 +97,6 @@
 		8305A845920747DE8C532C02 /* Pods-budejie_swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-budejie_swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-budejie_swift/Pods-budejie_swift.release.xcconfig"; sourceTree = "<group>"; };
 		8A0A19C42073153C0096C733 /* ADDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADDetailViewController.swift; sourceTree = "<group>"; };
 		8A0A19C52073153C0096C733 /* ADDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADDetailViewController.xib; sourceTree = "<group>"; };
-		8A599156205364A100F91243 /* ADSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADSquare.swift; sourceTree = "<group>"; };
 		8A5991582053650D00F91243 /* ADWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADWebViewController.swift; sourceTree = "<group>"; };
 		8A59915A20538BBB00F91243 /* ADMeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADMeViewController.swift; sourceTree = "<group>"; };
 		8A59915C20538FE700F91243 /* ADMeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADMeCell.swift; sourceTree = "<group>"; };
@@ -140,6 +136,11 @@
 		8A63B9F220B258780037AA1B /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		8A63B9F420B258C60037AA1B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8A63B9F620B25A140037AA1B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		8A63B9F820B280210037AA1B /* UIKit+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extension.swift"; sourceTree = "<group>"; };
+		8A63B9FA20B29C870037AA1B /* RecommendUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendUser.swift; sourceTree = "<group>"; };
+		8A63B9FC20B29CB70037AA1B /* RecommendCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendCategory.swift; sourceTree = "<group>"; };
+		8A63B9FE20B3BACC0037AA1B /* Square.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
+		8A63BA0020B3C6210037AA1B /* ADMeFooterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADMeFooterCollectionView.swift; sourceTree = "<group>"; };
 		8A766F1820437E0B006C592E /* ADTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADTabBarController.swift; sourceTree = "<group>"; };
 		8A766F1A20438192006C592E /* ADEssenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADEssenceViewController.swift; sourceTree = "<group>"; };
 		8A766F1C204381B4006C592E /* ADFriendTrendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADFriendTrendsViewController.swift; sourceTree = "<group>"; };
@@ -150,30 +151,23 @@
 		8A766F2A20442900006C592E /* ADPublishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPublishViewController.swift; sourceTree = "<group>"; };
 		8A766F2C20442F3D006C592E /* UIBarButtonItem+ADExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+ADExtension.swift"; sourceTree = "<group>"; };
 		8A766F32204434A3006C592E /* NSObject+ADKeyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+ADKeyValue.swift"; sourceTree = "<group>"; };
-		8A766F3420443DBA006C592E /* NSObject+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Constants.swift"; sourceTree = "<group>"; };
 		8A766F3620445D1C006C592E /* ADRecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRecommendViewController.swift; sourceTree = "<group>"; };
 		8A766F3820445DCC006C592E /* ADLoginRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADLoginRegisterViewController.swift; sourceTree = "<group>"; };
 		8A766F3A204460F3006C592E /* ADNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADNetworkManager.swift; sourceTree = "<group>"; };
-		8A766F3C20446628006C592E /* ADRecommendUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRecommendUser.swift; sourceTree = "<group>"; };
-		8A766F3E20446648006C592E /* ADRecommendCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRecommendCategory.swift; sourceTree = "<group>"; };
 		8A766F4020446778006C592E /* ADRecommendCategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRecommendCategoryCell.swift; sourceTree = "<group>"; };
 		8A766F42204467B1006C592E /* ADRecommendUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRecommendUserCell.swift; sourceTree = "<group>"; };
 		8A766F442048BC3A006C592E /* UIImage+ADExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+ADExtension.swift"; sourceTree = "<group>"; };
 		8A766F462048BDB8006C592E /* UIImageView+ADExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+ADExtension.swift"; sourceTree = "<group>"; };
 		8A766F48204B60BA006C592E /* ADRecommendTagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRecommendTagsViewController.swift; sourceTree = "<group>"; };
-		8A766F4A204B60DA006C592E /* ADRecommendTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRecommendTag.swift; sourceTree = "<group>"; };
 		8A766F4C204B6760006C592E /* ADRecommendTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADRecommendTagCell.swift; sourceTree = "<group>"; };
 		8A766F4E204BD4D9006C592E /* ADTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADTextField.swift; sourceTree = "<group>"; };
 		8A766F50204BD4EC006C592E /* ADVerticalButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADVerticalButton.swift; sourceTree = "<group>"; };
 		8A766F52204BED34006C592E /* ADPushGuideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADPushGuideView.swift; sourceTree = "<group>"; };
 		8A766F54204CC51C006C592E /* ADTopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADTopicViewController.swift; sourceTree = "<group>"; };
-		8A766F56204D104C006C592E /* ADTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADTopic.swift; sourceTree = "<group>"; };
 		8A766F58204D17FF006C592E /* ADTopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADTopicCell.swift; sourceTree = "<group>"; };
 		8A766F5A204D2C0A006C592E /* ADTopicPictureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADTopicPictureView.swift; sourceTree = "<group>"; };
 		8A766F5C204D2C6E006C592E /* ADTopicVoiceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADTopicVoiceView.swift; sourceTree = "<group>"; };
 		8A766F5E204D2CCB006C592E /* ADTopicVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADTopicVideoView.swift; sourceTree = "<group>"; };
-		8A766F60204D33D1006C592E /* ADComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADComment.swift; sourceTree = "<group>"; };
-		8A766F62204D347A006C592E /* ADUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADUser.swift; sourceTree = "<group>"; };
 		8A766F64204E9697006C592E /* Date+ADExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+ADExtension.swift"; sourceTree = "<group>"; };
 		8A766F66204F4067006C592E /* ADProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADProgressView.swift; sourceTree = "<group>"; };
 		8A766F68204F42E1006C592E /* ADCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADCommentCell.swift; sourceTree = "<group>"; };
@@ -265,8 +259,8 @@
 			isa = PBXGroup;
 			children = (
 				8A766F1A20438192006C592E /* ADEssenceViewController.swift */,
-				8A766F48204B60BA006C592E /* ADRecommendTagsViewController.swift */,
 				8A766F54204CC51C006C592E /* ADTopicViewController.swift */,
+				8A766F48204B60BA006C592E /* ADRecommendTagsViewController.swift */,
 				8A766F6C204FB995006C592E /* ADShowPictureViewController.swift */,
 				8A5F81C1203846CD00B0106D /* ADShowPictureViewController.xib */,
 				8A766F6A204FA084006C592E /* ADCommentViewController.swift */,
@@ -280,13 +274,9 @@
 		8A5F81C4203846CD00B0106D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8A766F56204D104C006C592E /* ADTopic.swift */,
 				8A63B9EE20B24C2B0037AA1B /* Topic.swift */,
-				8A766F4A204B60DA006C592E /* ADRecommendTag.swift */,
 				8A63B9F020B258380037AA1B /* RecommendTag.swift */,
-				8A766F60204D33D1006C592E /* ADComment.swift */,
 				8A63B9F220B258780037AA1B /* Comment.swift */,
-				8A766F62204D347A006C592E /* ADUser.swift */,
 				8A63B9F420B258C60037AA1B /* User.swift */,
 			);
 			path = Model;
@@ -339,8 +329,8 @@
 		8A5F81EF203846CD00B0106D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8A766F3C20446628006C592E /* ADRecommendUser.swift */,
-				8A766F3E20446648006C592E /* ADRecommendCategory.swift */,
+				8A63B9FA20B29C870037AA1B /* RecommendUser.swift */,
+				8A63B9FC20B29CB70037AA1B /* RecommendCategory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -382,7 +372,7 @@
 		8A5F8208203846CD00B0106D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8A599156205364A100F91243 /* ADSquare.swift */,
+				8A63B9FE20B3BACC0037AA1B /* Square.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -393,6 +383,7 @@
 				8A59915C20538FE700F91243 /* ADMeCell.swift */,
 				8A59915E2053908F00F91243 /* ADMeFooterView.swift */,
 				8A59916220539D0A00F91243 /* ADSquareButton.swift */,
+				8A63BA0020B3C6210037AA1B /* ADMeFooterCollectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -431,12 +422,12 @@
 				8A766F28204391CB006C592E /* UIView+ADExtension.swift */,
 				8A766F2C20442F3D006C592E /* UIBarButtonItem+ADExtension.swift */,
 				8A766F32204434A3006C592E /* NSObject+ADKeyValue.swift */,
-				8A766F3420443DBA006C592E /* NSObject+Constants.swift */,
 				8A766F442048BC3A006C592E /* UIImage+ADExtension.swift */,
 				8A766F462048BDB8006C592E /* UIImageView+ADExtension.swift */,
 				8A766F64204E9697006C592E /* Date+ADExtension.swift */,
 				8A766F762051CCF7006C592E /* Notification+ADExtension.swift */,
 				8A63B9F620B25A140037AA1B /* Constant.swift */,
+				8A63B9F820B280210037AA1B /* UIKit+Extension.swift */,
 			);
 			name = Extension;
 			path = Category;
@@ -630,6 +621,8 @@
 				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -647,6 +640,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -664,6 +659,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A63B9FF20B3BACC0037AA1B /* Square.swift in Sources */,
 				8A599161205393D900F91243 /* ADSettingViewController.swift in Sources */,
 				8A63B9EF20B24C2B0037AA1B /* Topic.swift in Sources */,
 				8A766F3920445DCC006C592E /* ADLoginRegisterViewController.swift in Sources */,
@@ -683,31 +679,27 @@
 				8A766F53204BED34006C592E /* ADPushGuideView.swift in Sources */,
 				8A766F3B204460F3006C592E /* ADNetworkManager.swift in Sources */,
 				8A766F65204E9697006C592E /* Date+ADExtension.swift in Sources */,
+				8A63B9FB20B29C870037AA1B /* RecommendUser.swift in Sources */,
 				8A766F9920526EE5006C592E /* ADTopWindow.swift in Sources */,
 				8A59915B20538BBB00F91243 /* ADMeViewController.swift in Sources */,
 				8A766F2B20442900006C592E /* ADPublishViewController.swift in Sources */,
 				8A5991592053650D00F91243 /* ADWebViewController.swift in Sources */,
-				8A766F63204D347A006C592E /* ADUser.swift in Sources */,
 				8A0A19C62073153C0096C733 /* ADDetailViewController.swift in Sources */,
+				8A63B9FD20B29CB70037AA1B /* RecommendCategory.swift in Sources */,
 				8A63B9F320B258780037AA1B /* Comment.swift in Sources */,
-				8A766F3520443DBA006C592E /* NSObject+Constants.swift in Sources */,
 				8A766F6B204FA084006C592E /* ADCommentViewController.swift in Sources */,
-				8A766F3D20446628006C592E /* ADRecommendUser.swift in Sources */,
 				8A766F67204F4068006C592E /* ADProgressView.swift in Sources */,
 				8A766F21204381C9006C592E /* ADNewViewController.swift in Sources */,
 				8A766F2D20442F3D006C592E /* UIBarButtonItem+ADExtension.swift in Sources */,
 				8A766F2520438BFD006C592E /* ADTabBar.swift in Sources */,
 				8A766F59204D17FF006C592E /* ADTopicCell.swift in Sources */,
-				8A766F3F20446648006C592E /* ADRecommendCategory.swift in Sources */,
 				8A766F3720445D1C006C592E /* ADRecommendViewController.swift in Sources */,
 				8A766F472048BDB8006C592E /* UIImageView+ADExtension.swift in Sources */,
 				8A766F1D204381B4006C592E /* ADFriendTrendsViewController.swift in Sources */,
-				8A766F61204D33D1006C592E /* ADComment.swift in Sources */,
 				8A59916B2055EA8600F91243 /* ADTagTextField.swift in Sources */,
 				8A766F5D204D2C6E006C592E /* ADTopicVoiceView.swift in Sources */,
+				8A63B9F920B280210037AA1B /* UIKit+Extension.swift in Sources */,
 				8A63B9F520B258C60037AA1B /* User.swift in Sources */,
-				8A766F57204D104C006C592E /* ADTopic.swift in Sources */,
-				8A766F4B204B60DA006C592E /* ADRecommendTag.swift in Sources */,
 				8A766F55204CC51C006C592E /* ADTopicViewController.swift in Sources */,
 				8A766F752051066F006C592E /* ADPublishView.swift in Sources */,
 				8A766F49204B60BA006C592E /* ADRecommendTagsViewController.swift in Sources */,
@@ -717,13 +709,13 @@
 				8A5F81A42038442D00B0106D /* AppDelegate.swift in Sources */,
 				8A63B9F720B25A140037AA1B /* Constant.swift in Sources */,
 				8A766F6D204FB995006C592E /* ADShowPictureViewController.swift in Sources */,
-				8A599157205364A100F91243 /* ADSquare.swift in Sources */,
 				8A59915F2053908F00F91243 /* ADMeFooterView.swift in Sources */,
 				8A59916720550B8400F91243 /* ADAddTagViewController.swift in Sources */,
 				8A766F732050FEC5006C592E /* ADPlaceholderTextView.swift in Sources */,
 				8A766F5B204D2C0A006C592E /* ADTopicPictureView.swift in Sources */,
 				8A766F772051CCF7006C592E /* Notification+ADExtension.swift in Sources */,
 				8A766F452048BC3A006C592E /* UIImage+ADExtension.swift in Sources */,
+				8A63BA0120B3C6210037AA1B /* ADMeFooterCollectionView.swift in Sources */,
 				8A766F69204F42E1006C592E /* ADCommentCell.swift in Sources */,
 				8A766F6F2050FE21006C592E /* ADPostWordViewController.swift in Sources */,
 				8A766F43204467B1006C592E /* ADRecommendUserCell.swift in Sources */,

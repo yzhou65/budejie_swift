@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "budejie_swift/Classes/Publish/View/ADAddToolBar.swift"
-            timestampString = "548561604.1051019"
+            timestampString = "548655893.823736"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "49"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "budejie_swift/Classes/Publish/View/ADAddToolBar.swift"
-            timestampString = "548561604.105191"
+            timestampString = "548655893.823824"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "71"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "budejie_swift/Classes/Publish/Controller/ADAddTagViewController.swift"
-            timestampString = "548561604.1052589"
+            timestampString = "548655893.823899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "205"
@@ -70,16 +70,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "budejie_swift/Classes/FriendTrends/Controller/ADRecommendViewController.swift"
+            timestampString = "548655893.824067"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "budejie_swift/Classes/Essence/Controller/ADCommentViewController.swift"
-            timestampString = "548561604.105399"
+            filePath = "budejie_swift/Classes/FriendTrends/Controller/ADRecommendViewController.swift"
+            timestampString = "548655893.8241611"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
-            landmarkName = "loadMoreComments()"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
+            landmarkName = "loadMoreUsers()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "budejie_swift/Classes/FriendTrends/Controller/ADRecommendViewController.swift"
+            timestampString = "548655893.824231"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "loadCategories()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

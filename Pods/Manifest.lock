@@ -30,6 +30,9 @@ PODS:
   - ReactiveSwift (3.1.0):
     - Result (~> 3.2)
   - Result (3.2.4)
+  - RxCocoa (4.1.2):
+    - RxSwift (~> 4.0)
+  - RxSwift (4.1.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -46,6 +49,8 @@ DEPENDENCIES:
   - NJKWebViewProgress
   - pop
   - ReactiveCocoa (~> 7.0.0)
+  - RxCocoa
+  - RxSwift
   - SDWebImage
   - SVProgressHUD
   - SwiftyJSON
@@ -63,6 +68,8 @@ SPEC REPOS:
     - ReactiveCocoa
     - ReactiveSwift
     - Result
+    - RxCocoa
+    - RxSwift
     - SDWebImage
     - SVProgressHUD
     - SwiftyJSON
@@ -79,10 +86,12 @@ SPEC CHECKSUMS:
   ReactiveCocoa: a1b5d502d0d1534f9a72981a485b297b17127f83
   ReactiveSwift: 5b26d2e988fe0eed2daf48c4054d1de74db50184
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
+  RxSwift: e49536837d9901277638493ea537394d4b55f570
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 6843e9b83097f5bd4a8400880cb3058993304f23
+PODFILE CHECKSUM: c68e2b345b01c3a3d7e89db1cd6a6dc6fe206613
 
 COCOAPODS: 1.5.2

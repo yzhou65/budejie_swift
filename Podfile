@@ -14,5 +14,7 @@ target 'budejie_swift’ do
     pod "pop"
     pod "NJKWebViewProgress"
     pod 'ReactiveCocoa', '~> 7.0.0'
+    pod 'RxSwift'
+    pod 'RxCocoa'
 end
 

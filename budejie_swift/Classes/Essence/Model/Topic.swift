@@ -133,7 +133,7 @@ struct Topic: HandyJSON {
     
     /** 额外的辅助属性 */
     /** cell的高度.写了readonly以后，系统就不会再自动生成_cellHeight成员变量了 */
-     var cellHeight: CGFloat = 0
+    var cellHeight: CGFloat = 0
     
     /** 图片控件的frame */
     private(set) var pictureFrame: CGRect = CGRect.zero
@@ -167,7 +167,9 @@ struct Topic: HandyJSON {
         // 文字的最大尺寸
         let maxSize = CGSize(width: UIScreen.main.bounds.size.width - 2 * ADTopicCellMargin, height: CGFloat(MAXFLOAT))
         // 计算文字高度
-        let textH: CGFloat = self.text.boundingRect(with: maxSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)], context: nil).size.height
+        let attributedText = NSAttributedString(string: self.text, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)])
+        let textH = attributedText.boundingRect(with: maxSize, options: .usesLineFragmentOrigin, context: nil).size.height
+//        let textH: CGFloat = self.text.boundingRect(with: maxSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)], context: nil).size.height
         
         // cell的高度
         var ch = ADTopicCellTextY + textH + ADTopicCellMargin * 2
@@ -208,7 +210,7 @@ struct Topic: HandyJSON {
             ch += videoH + ADTopicCellMargin
         }
         else {
-            ch += ADTopicCellMargin * 2
+            ch += ADTopicCellMargin
         }
         
         //如果有最热评论，还要将最热评论的高度计入，否则最热评论会挡住帖子内容
@@ -221,7 +223,9 @@ struct Topic: HandyJSON {
         
         if let topCmt = self.topCmt {
             let top = "\(topCmt.user.username): \(topCmt.content)"
-            let topH = top.boundingRect(with: maxSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)], context: nil).size.height
+//            let topH = top.boundingRect(with: maxSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)], context: nil).size.height
+            let attributedTop = NSAttributedString(string: top, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)])
+            let topH = attributedTop.boundingRect(with: maxSize, options: .usesLineFragmentOrigin, context: nil).size.height
             ch += ADTopicCellTopCmtTitleH + topH + ADTopicCellMargin
         }
         
